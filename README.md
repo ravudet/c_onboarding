@@ -1,9 +1,14 @@
+### install and configure IDE
+
 1. Install Visual Studio 2022 Community version 17.14.16
 2. Install the appropriate visual studio components using [`/.vsconfig`](/.vsconfig)
-3. File -> New -> Project
-4. Select "Empty Project" under the "C++" language
-5. Click "Create"
-6. Add a `hello.c` file with the following contents:
+
+### create a new project
+
+1. File -> New -> Project
+2. Select "Empty Project" under the "C++" language
+3. Click "Create"
+4. Add a `hello.c` file with the following contents:
 ```c
 #include <stdio.h>
 
@@ -12,38 +17,33 @@ printf("Hello, World!\n");
 return 0;
 }
 ```
-7. Right-click the project -> properties -> c/c++ -> Advanced
-8. set "compile as" to "compile as c code (/TC)"
-9. click ok
+5. Right-click the project -> properties -> c/c++ -> Advanced
+6. set "compile as" to "compile as c code (/TC)"
+7. click ok
 
+### confirm that you aren't accidentally compiling c++
 
+```
+#include <stdio.h>
 
-
-
-
-
-
-
-
-
-## test that you're not accidentally c++
-
-
-
-
-
-#include <iostream>
-
-void print(int x) {
-    std::cout << "Integer: " << x << std::endl;
+void print(int x)
+{
+	printf("Integer:");
+	printf(x);
+	printf("\n");
 }
 
-void print(double x) {
-    std::cout << "Double: " << x << std::endl;
+void print(double x)
+{
+	printf("Double:");
+	printf(x);
+	printf("\n");
 }
 
-int main() {
-    print(5);
-    print(3.14);
-    return 0;
+int main()
+{
+	print(5);
+	print((int)3.14);
+	return 0; 
 }
+```
