@@ -1,4 +1,6 @@
 1. Install Visual Studio 2022 Community version 17.14.16
+2. Install the appropriate visual studio components using [`/.vsconfig`](/.vsconfig)
+
 
 
 17.14.16
