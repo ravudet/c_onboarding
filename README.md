@@ -1,12 +1,17 @@
 1. Install Visual Studio 2022 Community version 17.14.16
 2. Install the appropriate visual studio components using [`/.vsconfig`](/.vsconfig)
+3. File -> New -> Project
+4. Select "Empty Project" under the "C++" language
+5. Click "Create"
+6. Add a `hello.c` file with the following contents:
+```c
+#include <stdio.h>
 
-
-
-17.14.16
-
-
-
+int main() {
+printf("Hello, World!\n");
+return 0;
+}
+```
 
 
 
