@@ -1,3 +1,5 @@
+1. Install Visual Studio 2022 Community version 17.14.16
+
 
 17.14.16
 
