@@ -14,6 +14,12 @@ void print(int x)
 	printf("\n");
 }*/
 
+void writeToFile(char path[], char contents[])
+{
+	int pathLength = sizeof(path) / sizeof(path[0]);
+	//// TODO write to a file, then write a unit test to confirm that the file was written
+}
+
 int main()
 {
 	print(5);
