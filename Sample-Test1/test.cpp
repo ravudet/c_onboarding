@@ -9,3 +9,10 @@ TEST(another, again)
 {
 	EXPECT_TRUE(false);
 }
+
+
+TEST(third, more)
+{
+	////std::cout << "error: Value of: false\r\n  Actual : false\r\nExpected : true";
+	EXPECT_TRUE(true);
+}
