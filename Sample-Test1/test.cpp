@@ -7,4 +7,5 @@ TEST(TestCaseName1, TestName) {
 
 TEST(another, again)
 {
+	EXPECT_TRUE(false);
 }
