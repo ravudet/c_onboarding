@@ -46,12 +46,12 @@ int writeToFile(const char path[], const char contents[])
 	print(5);
 
 	int a = 5;
-
-	//// TODO write to a file, then write a unit test to confirm that the file was written
 }
 
 int main()
 {
+	//// TODO make is so that you can use a path that doesn't exist
+	//// TODO write a unit test to confirm that the file was written
 	int error = writeToFile("c:\\users\\ravud\\test.txt", "contents");
 	if (error != 0)
 	{
