@@ -55,7 +55,7 @@ int main()
 	int error = writeToFile("c:\\users\\ravud\\test.txt", "contents");
 	if (error != 0)
 	{
-		printf("ERROR! %d", strerrorname_np());
+		printf("ERROR! %d", error); //// TODO https://learn.microsoft.com/en-us/cpp/c-runtime-library/errno-constants?view=msvc-170 or you can just look directly in `errno.h`
 	}
 
 	return 0;
