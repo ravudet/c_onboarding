@@ -47,12 +47,41 @@ int getParentDirectory(const char path[], const int endIndex, const char directo
 	return parentIndex;
 }
 
-int mksubdir(const char path[], int endIndex)
+typedef enum
+{
+	BUG,
+	EACCES_1,
+	EEXIST_1,
+	ELOOP_1,
+	EMLINK_1,
+	ENAMETOOLONG_1,
+	ENOENT_1,
+	ENOSPC_1,
+	ENOTDIR_1,
+	EROFS_1,
+} mksubdir_t;
+
+mksubdir_t mksubdir(const char path[], int endIndex)
 {
 	char* subPath = malloc(endIndex);
 	if (subPath == NULL)
 	{
-		return errno;
+		int error = errno;
+		switch (error)
+		{
+			case EACCES:
+				return EACCES_1;
+			case EEXIST:
+				return EEXIST_1;
+			case ELOOP:
+				return ELOOP_1;
+			case EMLINK:
+				return EMLINK_1;
+			case ENAMETOOLONG:
+				return ENAMETOOLONG_1;
+		}
+
+
 	}
 
 	memcpy(subPath, path, endIndex);
@@ -61,7 +90,23 @@ int mksubdir(const char path[], int endIndex)
 	return error;
 }
 
-int writeToFile(char path[], int pathLength, const char contents[])
+int mkdirectorytraversal(const char path[], int pathLength)
+{
+	int otherError = -1;
+	int parentDirectoryEndIndex = pathLength - 1;
+	while (otherError != 0)
+	{
+		char delimiter[] = "//";
+		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, "//", sizeof(delimiter) / sizeof(delimiter[0]));
+		otherError = mksubdir(path, parentDirectoryEndIndex);
+	}
+
+	//// TODO create the directory and then loop
+}
+
+//// TODO sqllite c repo so that you can get good practices?
+
+int writeToFile(const char path[], int pathLength, const char contents[])
 {
 	//// TODO separating the declaration from the initialization causes an error for some reason
 	//// FILE* fptr;
@@ -73,16 +118,7 @@ int writeToFile(char path[], int pathLength, const char contents[])
 		int error = errno;
 		if (error == 2)
 		{
-			int otherError = -1;
-			int parentDirectoryEndIndex = pathLength - 1;
-			while (otherError != 0)
-			{
-				char delimiter[] = "//";
-				parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, "//", sizeof(delimiter) / sizeof(delimiter[0]));
-				otherError = mksubdir(path, parentDirectoryEndIndex);
-			}
-
-			//// TODO create the directory and then loop
+			
 		}
 
 		return error; //// TODO i think this returns the pointer to the _errno function or something
@@ -108,6 +144,15 @@ int writeToFile(char path[], int pathLength, const char contents[])
 	print(5);
 
 	int a = 5;
+}
+
+int writeToFilePath(const char path[], int pathLength, const char contents[])
+{
+	int error = writeToFile(path, pathLength, contents);
+	if (error == 2)
+	{
+		mkdirectorytraversal(path, pathLength);
+	}
 }
 
 int main()
