@@ -79,10 +79,16 @@ mksubdir_t mksubdir(const char path[], int endIndex)
 				return EMLINK_1;
 			case ENAMETOOLONG:
 				return ENAMETOOLONG_1;
+			//// TODO you are here
+			default:
+				return BUG;
 		}
 
 
 	}
+
+	
+	1;
 
 	memcpy(subPath, path, endIndex);
 
