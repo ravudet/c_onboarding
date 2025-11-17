@@ -48,6 +48,7 @@ int getParentDirectory(const char path[], const int endIndex, const char directo
 }
 
 const int SUCCESS = 0;
+const int UNDEFINED = -1;
 
 enum mksubdirError
 {
@@ -120,18 +121,68 @@ finally:
 	return returnValue;
 }
 
-int mkdirectorytraversal(const char path[], int pathLength)
+enum mkdirectorytraversalError
 {
-	int otherError = -1;
+	mkdirectorytraversalError_BUG = 1,
+	mkdirectorytraversalError_EACCES,
+	mkdirectorytraversalError_ELOOP,
+	mkdirectorytraversalError_EMLINK,
+	mkdirectorytraversalError_ENAMETOOLONG,
+	mkdirectorytraversalError_ENOSPC,
+	mkdirectorytraversalError_ENOTDIR,
+	mkdirectorytraversalError_EROFS,
+	mkdirectorytraversalError_ENOMEM,
+};
+
+enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathLength)
+{
+	char delimiter[] = "//";
+	enum mkdirectorytraversalError returnValue = SUCCESS;
+
+	enum mksubdirError error = mksubdirError_ENOENT;
 	int parentDirectoryEndIndex = pathLength - 1;
-	while (otherError != 0)
+	while (error == mksubdirError_ENOENT)
 	{
-		char delimiter[] = "//";
 		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, delimiter, sizeof(delimiter) / sizeof(delimiter[0]));
-		otherError = mksubdir(path, parentDirectoryEndIndex);
+		error = mksubdir(path, parentDirectoryEndIndex);
+		switch (error)
+		{
+			case mksubdirError_EACCES:
+				returnValue = mkdirectorytraversalError_EACCES;
+				goto finally;
+			case mksubdirError_EEXIST:
+				goto finally;
+			case mksubdirError_ELOOP:
+				returnValue = mkdirectorytraversalError_ELOOP;
+				goto finally;
+			case mksubdirError_EMLINK:
+				returnValue = mkdirectorytraversalError_EMLINK;
+				goto finally;
+			case mksubdirError_ENAMETOOLONG:
+				returnValue = mkdirectorytraversalError_ENAMETOOLONG;
+				goto finally;
+			case mksubdirError_ENOENT:
+				continue;
+			case mksubdirError_ENOMEM:
+				returnValue = mkdirectorytraversalError_ENOMEM;
+				goto finally;
+			case mksubdirError_ENOSPC:
+				returnValue = mkdirectorytraversalError_ENOSPC;
+				goto finally;
+			case mksubdirError_ENOTDIR:
+				returnValue = mkdirectorytraversalError_ENOTDIR;
+				goto finally;
+			case mksubdirError_EROFS:
+				returnValue = mkdirectorytraversalError_EROFS;
+				goto finally;
+			default:
+				returnValue = mkdirectorytraversalError_BUG;
+				goto finally;
+		}
 	}
 
-	//// TODO create the directory and then loop
+finally:
+	return returnValue;
 }
 
 //// TODO sqllite c repo so that you can get good practices?
