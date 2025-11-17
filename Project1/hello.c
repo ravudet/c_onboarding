@@ -28,18 +28,29 @@ void print(int x)
 
 bool substrcmp(const char x[], const int xIndex, const char y[], const int yIndex, const int length)
 {
-	return memcmp(&x + xIndex, &y + yIndex, length) == 0;
+	for (int i = 0; i < length; ++i)
+	{
+		char xValue = x[xIndex + i];
+		char yValue = y[yIndex + i];
+		if (xValue != yValue)
+		{
+			return false;
+		}
+	}
+
+	return true;
+	//// TODO use this line instead: return memcmp(&x + xIndex, &y + yIndex, length) == 0;
 }
 
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength)
 {
 	int parentIndex = endIndex;
-	if (substrcmp(path, endIndex - delimiterLength + 1, directoryDelimiter, 0, delimiterLength))
+	if (substrcmp(path, parentIndex - delimiterLength, directoryDelimiter, 0, delimiterLength))
 	{
-		parentIndex = endIndex - delimiterLength + 1;
+		parentIndex = parentIndex - delimiterLength;
 	}
 
-	while (endIndex >= 0 && !substrcmp(path, endIndex - delimiterLength + 1, directoryDelimiter, 0, delimiterLength))
+	while (parentIndex >= 0 && !substrcmp(path, parentIndex - delimiterLength, directoryDelimiter, 0, delimiterLength))
 	{
 		--parentIndex;
 	}
@@ -65,11 +76,11 @@ enum mksubdirError
 	mksubdirError_ENOMEM,
 };
 
-enum mksubdirError mksubdir(const char path[], int endIndex)
+enum mksubdirError mksubdir(const char path[], const int endIndex)
 {
 	enum mksubdirError returnValue = SUCCESS;
 
-	char* subPath = malloc(endIndex);
+	char* subPath = malloc(endIndex + 1);
 	if (subPath == NULL)
 	{
 		int error = errno;
@@ -77,40 +88,54 @@ enum mksubdirError mksubdir(const char path[], int endIndex)
 		{
 			case ENOMEM:
 				returnValue = mksubdirError_ENOMEM;
+				break;
 			default:
 				returnValue = mksubdirError_BUG;
+				break;
 		}
 
 		goto finally;
 	}
 
+	subPath[endIndex] = '\0';
 	memcpy(subPath, path, endIndex);
 
 	int error = mkdir(subPath);
-	if (error != 0)
+	if (error == -1)
 	{
+		error = errno;
 		switch (error)
 		{
 			case EACCES:
 				returnValue = mksubdirError_EACCES;
+				break;
 			case EEXIST:
 				returnValue = mksubdirError_EEXIST;
+				break;
 			case ELOOP:
 				returnValue = mksubdirError_ELOOP;
+				break;
 			case EMLINK:
 				returnValue = mksubdirError_EMLINK;
+				break;
 			case ENAMETOOLONG:
 				returnValue = mksubdirError_ENAMETOOLONG;
+				break;
 			case ENOENT:
 				returnValue = mksubdirError_ENOENT;
+				break;
 			case ENOSPC:
 				returnValue = mksubdirError_ENOSPC;
+				break;
 			case ENOTDIR:
 				returnValue = mksubdirError_ENOTDIR;
+				break;
 			case EROFS:
 				returnValue = mksubdirError_EROFS;
+				break;
 			default:
 				returnValue = mksubdirError_BUG;
+				break;
 		}
 
 		goto finally;
@@ -136,6 +161,11 @@ enum mkdirectorytraversalError
 
 enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathLength)
 {
+	//// TODO this doesn't actually even accomplish what you want; you need to create the path, and if you can't, create the parent, then create this path
+	//// while (trycreate() == noent)
+	//// {
+	////   createparent()
+	//// }
 	char delimiter[] = "\\";
 	enum mkdirectorytraversalError returnValue = SUCCESS;
 
@@ -145,39 +175,44 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathL
 	{
 		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, delimiter, (sizeof(delimiter) / sizeof(delimiter[0])) - 1);
 		error = mksubdir(path, parentDirectoryEndIndex);
-		switch (error)
+		if (error != SUCCESS)
 		{
-			case mksubdirError_EACCES:
-				returnValue = mkdirectorytraversalError_EACCES;
-				goto finally;
-			case mksubdirError_EEXIST:
-				goto finally;
-			case mksubdirError_ELOOP:
-				returnValue = mkdirectorytraversalError_ELOOP;
-				goto finally;
-			case mksubdirError_EMLINK:
-				returnValue = mkdirectorytraversalError_EMLINK;
-				goto finally;
-			case mksubdirError_ENAMETOOLONG:
-				returnValue = mkdirectorytraversalError_ENAMETOOLONG;
-				goto finally;
-			case mksubdirError_ENOENT:
-				continue;
-			case mksubdirError_ENOMEM:
-				returnValue = mkdirectorytraversalError_ENOMEM;
-				goto finally;
-			case mksubdirError_ENOSPC:
-				returnValue = mkdirectorytraversalError_ENOSPC;
-				goto finally;
-			case mksubdirError_ENOTDIR:
-				returnValue = mkdirectorytraversalError_ENOTDIR;
-				goto finally;
-			case mksubdirError_EROFS:
-				returnValue = mkdirectorytraversalError_EROFS;
-				goto finally;
-			default:
-				returnValue = mkdirectorytraversalError_BUG;
-				goto finally;
+			switch (error)
+			{
+				case mksubdirError_EACCES:
+					returnValue = mkdirectorytraversalError_EACCES;
+					break;
+				case mksubdirError_EEXIST:
+					break;
+				case mksubdirError_ELOOP:
+					returnValue = mkdirectorytraversalError_ELOOP;
+					break;
+				case mksubdirError_EMLINK:
+					returnValue = mkdirectorytraversalError_EMLINK;
+					break;
+				case mksubdirError_ENAMETOOLONG:
+					returnValue = mkdirectorytraversalError_ENAMETOOLONG;
+					break;
+				case mksubdirError_ENOENT:
+					continue;
+				case mksubdirError_ENOMEM:
+					returnValue = mkdirectorytraversalError_ENOMEM;
+					break;
+				case mksubdirError_ENOSPC:
+					returnValue = mkdirectorytraversalError_ENOSPC;
+					break;
+				case mksubdirError_ENOTDIR:
+					returnValue = mkdirectorytraversalError_ENOTDIR;
+					break;
+				case mksubdirError_EROFS:
+					returnValue = mkdirectorytraversalError_EROFS;
+					break;
+				default:
+					returnValue = mkdirectorytraversalError_BUG;
+					break;
+			}
+
+			goto finally;
 		}
 	}
 
