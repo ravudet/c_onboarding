@@ -127,7 +127,7 @@ int mkdirectorytraversal(const char path[], int pathLength)
 	while (otherError != 0)
 	{
 		char delimiter[] = "//";
-		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, "//", sizeof(delimiter) / sizeof(delimiter[0]));
+		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, delimiter, sizeof(delimiter) / sizeof(delimiter[0]));
 		otherError = mksubdir(path, parentDirectoryEndIndex);
 	}
 
