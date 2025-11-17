@@ -47,53 +47,77 @@ int getParentDirectory(const char path[], const int endIndex, const char directo
 	return parentIndex;
 }
 
-typedef enum
-{
-	BUG,
-	EACCES_1,
-	EEXIST_1,
-	ELOOP_1,
-	EMLINK_1,
-	ENAMETOOLONG_1,
-	ENOENT_1,
-	ENOSPC_1,
-	ENOTDIR_1,
-	EROFS_1,
-} mksubdir_t;
+const int SUCCESS = 0;
 
-mksubdir_t mksubdir(const char path[], int endIndex)
+enum mksubdirError
 {
+	mksubdirError_BUG = 1,
+	mksubdirError_EACCES,
+	mksubdirError_EEXIST,
+	mksubdirError_ELOOP,
+	mksubdirError_EMLINK,
+	mksubdirError_ENAMETOOLONG,
+	mksubdirError_ENOENT,
+	mksubdirError_ENOSPC,
+	mksubdirError_ENOTDIR,
+	mksubdirError_EROFS,
+	mksubdirError_ENOMEM,
+};
+
+enum mksubdirError mksubdir(const char path[], int endIndex)
+{
+	enum mksubdirError returnValue = SUCCESS;
+
 	char* subPath = malloc(endIndex);
 	if (subPath == NULL)
 	{
 		int error = errno;
 		switch (error)
 		{
-			case EACCES:
-				return EACCES_1;
-			case EEXIST:
-				return EEXIST_1;
-			case ELOOP:
-				return ELOOP_1;
-			case EMLINK:
-				return EMLINK_1;
-			case ENAMETOOLONG:
-				return ENAMETOOLONG_1;
-			//// TODO you are here
+			case ENOMEM:
+				returnValue = mksubdirError_ENOMEM;
 			default:
-				return BUG;
+				returnValue = mksubdirError_BUG;
 		}
 
-
+		goto finally;
 	}
-
-	
-	1;
 
 	memcpy(subPath, path, endIndex);
 
 	int error = mkdir(subPath);
-	return error;
+	if (error != 0)
+	{
+		switch (error)
+		{
+			case EACCES:
+				returnValue = mksubdirError_EACCES;
+			case EEXIST:
+				returnValue = mksubdirError_EEXIST;
+			case ELOOP:
+				returnValue = mksubdirError_ELOOP;
+			case EMLINK:
+				returnValue = mksubdirError_EMLINK;
+			case ENAMETOOLONG:
+				returnValue = mksubdirError_ENAMETOOLONG;
+			case ENOENT:
+				returnValue = mksubdirError_ENOENT;
+			case ENOSPC:
+				returnValue = mksubdirError_ENOSPC;
+			case ENOTDIR:
+				returnValue = mksubdirError_ENOTDIR;
+			case EROFS:
+				returnValue = mksubdirError_EROFS;
+			default:
+				returnValue = mksubdirError_BUG;
+		}
+
+		goto finally;
+	}
+
+finally:
+	free(subPath);
+	return returnValue;
 }
 
 int mkdirectorytraversal(const char path[], int pathLength)
