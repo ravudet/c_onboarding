@@ -136,14 +136,14 @@ enum mkdirectorytraversalError
 
 enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathLength)
 {
-	char delimiter[] = "//";
+	char delimiter[] = "\\";
 	enum mkdirectorytraversalError returnValue = SUCCESS;
 
 	enum mksubdirError error = mksubdirError_ENOENT;
 	int parentDirectoryEndIndex = pathLength - 1;
 	while (error == mksubdirError_ENOENT)
 	{
-		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, delimiter, sizeof(delimiter) / sizeof(delimiter[0]));
+		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, delimiter, (sizeof(delimiter) / sizeof(delimiter[0])) - 1);
 		error = mksubdir(path, parentDirectoryEndIndex);
 		switch (error)
 		{
@@ -241,6 +241,8 @@ int main()
 	//// TODO make is so that you can use a path that doesn't exist
 	//// TODO write a unit test to confirm that the file was written
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
+	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));
+
 	int error = writeToFile(path, sizeof(path) / sizeof(path[0]), "contents");
 	if (error != 0)
 	{
