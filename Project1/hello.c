@@ -159,13 +159,8 @@ enum mkdirectorytraversalError
 	mkdirectorytraversalError_ENOMEM,
 };
 
-enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathLength)
+enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength)
 {
-	//// TODO this doesn't actually even accomplish what you want; you need to create the path, and if you can't, create the parent, then create this path
-	//// while (trycreate() == noent)
-	//// {
-	////   createparent()
-	//// }
 	char delimiter[] = "\\";
 	enum mkdirectorytraversalError returnValue = SUCCESS;
 
@@ -173,8 +168,7 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathL
 	int parentDirectoryEndIndex = pathLength - 1;
 	while (error == mksubdirError_ENOENT)
 	{
-		parentDirectoryEndIndex = getParentDirectory(path, parentDirectoryEndIndex, delimiter, (sizeof(delimiter) / sizeof(delimiter[0])) - 1);
-		error = mksubdir(path, parentDirectoryEndIndex);
+		error = mksubdir(directoryPath, parentDirectoryEndIndex);
 		if (error != SUCCESS)
 		{
 			switch (error)
@@ -194,6 +188,8 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char path[], int pathL
 					returnValue = mkdirectorytraversalError_ENAMETOOLONG;
 					break;
 				case mksubdirError_ENOENT:
+					parentDirectoryEndIndex = getParentDirectory(directoryPath, parentDirectoryEndIndex, delimiter, (sizeof(delimiter) / sizeof(delimiter[0])) - 1);
+					mkdirectorytraversal(directoryPath, parentDirectoryEndIndex);
 					continue;
 				case mksubdirError_ENOMEM:
 					returnValue = mkdirectorytraversalError_ENOMEM;
