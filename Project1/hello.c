@@ -258,6 +258,8 @@ enum mkdirectorytraversalError
 
 enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength)
 {
+	//// TODO you are here
+	//// TODO follow the same error handling pattern as the above 2 methods
 	char delimiter[] = "\\";
 	enum mkdirectorytraversalError returnValue = SUCCESS;
 
