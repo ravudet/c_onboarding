@@ -26,6 +26,50 @@ void print(int x)
 
 // https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
 
+const int SUCCESS = 0;
+const int UNDEFINED = -1;
+
+enum substringError
+{
+	substringError_BUG = 1,
+	substringError_ENOMEM,
+};
+
+//// TODO can you have a macro or something to tell the compiler that `substring` is not null if `0` is returned?
+enum substringError substring(const char string[], const int endIndex, char** substringPointer)
+{
+	enum substringError returnValue = SUCCESS;
+
+	char* substring = malloc(endIndex + 1);
+	if (substring == NULL)
+	{
+		int error = errno;
+		switch (error)
+		{
+			case ENOMEM:
+				returnValue = substringError_ENOMEM;
+				break;
+			default:
+				returnValue = substringError_BUG;
+				break;
+		}
+
+		goto catch;
+	}
+
+	substring[endIndex] = '\0';
+	memcpy(substring, string, endIndex);
+
+	*substringPointer = substring;
+	goto finally;
+
+catch:
+	free(substring);
+
+finally:
+	return returnValue;
+}
+
 bool substrcmp(const char x[], const int xIndex, const char y[], const int yIndex, const int length)
 {
 	for (int i = 0; i < length; ++i)
@@ -58,8 +102,75 @@ int getParentDirectory(const char path[], const int endIndex, const char directo
 	return parentIndex;
 }
 
-const int SUCCESS = 0;
-const int UNDEFINED = -1;
+enum ravudetmkdirError
+{
+	ravudetmkdirError_BUG = 1,
+	ravudetmkdirError_NULLPOINTER,
+	ravudetmkdirError_EACCES,
+	ravudetmkdirError_EEXIST,
+	ravudetmkdirError_ELOOP,
+	ravudetmkdirError_EMLINK,
+	ravudetmkdirError_ENAMETOOLONG,
+	ravudetmkdirError_ENOENT,
+	ravudetmkdirError_ENOSPC,
+	ravudetmkdirError_ENOTDIR,
+	ravudetmkdirError_EROFS,
+};
+
+enum ravudetmkdirError ravudetmkdir(const char path[])
+{
+	enum ravudetmkdirError returnValue = SUCCESS;
+	
+	if (path == NULL)
+	{
+		returnValue = ravudetmkdirError_NULLPOINTER;
+		goto finally;
+	}
+
+	int mkdirError = mkdir(path);
+	if (mkdirError == -1)
+	{
+		mkdirError = errno;
+		switch (mkdirError)
+		{
+		case EACCES:
+			returnValue = ravudetmkdirError_EACCES;
+			break;
+		case EEXIST:
+			returnValue = ravudetmkdirError_EEXIST;
+			break;
+		case ELOOP:
+			returnValue = ravudetmkdirError_ELOOP;
+			break;
+		case EMLINK:
+			returnValue = ravudetmkdirError_EMLINK;
+			break;
+		case ENAMETOOLONG:
+			returnValue = ravudetmkdirError_ENAMETOOLONG;
+			break;
+		case ENOENT:
+			returnValue = ravudetmkdirError_ENOENT;
+			break;
+		case ENOSPC:
+			returnValue = ravudetmkdirError_ENOSPC;
+			break;
+		case ENOTDIR:
+			returnValue = ravudetmkdirError_ENOTDIR;
+			break;
+		case EROFS:
+			returnValue = ravudetmkdirError_EROFS;
+			break;
+		default:
+			returnValue = ravudetmkdirError_BUG;
+			break;
+		}
+
+		goto finally;
+	}
+
+finally:
+	return returnValue;
+}
 
 enum mksubdirError
 {
@@ -79,14 +190,15 @@ enum mksubdirError
 enum mksubdirError mksubdir(const char path[], const int endIndex)
 {
 	enum mksubdirError returnValue = SUCCESS;
+	int error;
 
-	char* subPath = malloc(endIndex + 1);
-	if (subPath == NULL)
+	char* subPath;
+	error = substring(path, endIndex, &subPath);
+	if (error != SUCCESS)
 	{
-		int error = errno;
 		switch (error)
 		{
-			case ENOMEM:
+			case substringError_ENOMEM:
 				returnValue = mksubdirError_ENOMEM;
 				break;
 			default:
@@ -97,40 +209,36 @@ enum mksubdirError mksubdir(const char path[], const int endIndex)
 		goto finally;
 	}
 
-	subPath[endIndex] = '\0';
-	memcpy(subPath, path, endIndex);
-
-	int error = mkdir(subPath);
-	if (error == -1)
+	error = ravudetmkdir(subPath);
+	if (error != SUCCESS)
 	{
-		error = errno;
 		switch (error)
 		{
-			case EACCES:
+			case ravudetmkdirError_EACCES:
 				returnValue = mksubdirError_EACCES;
 				break;
-			case EEXIST:
+			case ravudetmkdirError_EEXIST:
 				returnValue = mksubdirError_EEXIST;
 				break;
-			case ELOOP:
+			case ravudetmkdirError_ELOOP:
 				returnValue = mksubdirError_ELOOP;
 				break;
-			case EMLINK:
+			case ravudetmkdirError_EMLINK:
 				returnValue = mksubdirError_EMLINK;
 				break;
-			case ENAMETOOLONG:
+			case ravudetmkdirError_ENAMETOOLONG:
 				returnValue = mksubdirError_ENAMETOOLONG;
 				break;
-			case ENOENT:
+			case ravudetmkdirError_ENOENT:
 				returnValue = mksubdirError_ENOENT;
 				break;
-			case ENOSPC:
+			case ravudetmkdirError_ENOSPC:
 				returnValue = mksubdirError_ENOSPC;
 				break;
-			case ENOTDIR:
+			case ravudetmkdirError_ENOTDIR:
 				returnValue = mksubdirError_ENOTDIR;
 				break;
-			case EROFS:
+			case ravudetmkdirError_EROFS:
 				returnValue = mksubdirError_EROFS;
 				break;
 			default:
@@ -164,11 +272,11 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], 
 	char delimiter[] = "\\";
 	enum mkdirectorytraversalError returnValue = SUCCESS;
 
+	int parentDirectoryEndIndex;
 	enum mksubdirError error = mksubdirError_ENOENT;
-	int parentDirectoryEndIndex = pathLength - 1;
 	while (error == mksubdirError_ENOENT)
 	{
-		error = mksubdir(directoryPath, parentDirectoryEndIndex);
+		error = mksubdir(directoryPath, pathLength - 1);
 		if (error != SUCCESS)
 		{
 			switch (error)
@@ -188,9 +296,16 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], 
 					returnValue = mkdirectorytraversalError_ENAMETOOLONG;
 					break;
 				case mksubdirError_ENOENT:
-					parentDirectoryEndIndex = getParentDirectory(directoryPath, parentDirectoryEndIndex, delimiter, (sizeof(delimiter) / sizeof(delimiter[0])) - 1);
-					mkdirectorytraversal(directoryPath, parentDirectoryEndIndex);
-					continue;
+					parentDirectoryEndIndex = getParentDirectory(directoryPath, pathLength - 1, delimiter, (sizeof(delimiter) / sizeof(delimiter[0])) - 1);
+					returnValue = mkdirectorytraversal(directoryPath, parentDirectoryEndIndex);
+					if (returnValue == SUCCESS)
+					{
+						continue;
+					}
+					else
+					{
+						break;
+					}
 				case mksubdirError_ENOMEM:
 					returnValue = mkdirectorytraversalError_ENOMEM;
 					break;
@@ -218,13 +333,13 @@ finally:
 
 //// TODO sqllite c repo so that you can get good practices?
 
-int writeToFile(const char path[], int pathLength, const char contents[])
+int writeToFile(const char filePath[], int pathLength, const char contents[])
 {
 	//// TODO separating the declaration from the initialization causes an error for some reason
 	//// FILE* fptr;
 	//// fptr = fopen(path, "a");
 
-	FILE* fptr = fopen(path, "a");
+	FILE* fptr = fopen(filePath, "a");
 	if (fptr == NULL)
 	{
 		int error = errno;
@@ -249,13 +364,6 @@ int writeToFile(const char path[], int pathLength, const char contents[])
 	}
 
 	return 0;
-
-
-
-
-	print(5);
-
-	int a = 5;
 }
 
 int writeToFilePath(const char path[], int pathLength, const char contents[])
