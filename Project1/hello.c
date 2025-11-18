@@ -72,18 +72,32 @@ finally:
 
 bool substrcmp(const char x[], const int xIndex, const char y[], const int yIndex, const int length)
 {
+	return memcmp(x + xIndex, y + yIndex, length) == 0;
+
+	/*bool returnValue2 = memcmp(x + xIndex, y + yIndex, length) == 0;
 	for (int i = 0; i < length; ++i)
 	{
 		char xValue = x[xIndex + i];
 		char yValue = y[yIndex + i];
 		if (xValue != yValue)
 		{
+			if (returnValue2 == true)
+			{
+				printf("fail!");
+			}
+
 			return false;
 		}
 	}
 
-	return true;
-	//// TODO use this line instead: return memcmp(&x + xIndex, &y + yIndex, length) == 0;
+	////return true;
+	bool returnValue = memcmp(x + xIndex, y + yIndex, length) == 0;
+	if (!returnValue)
+	{
+		printf("fail!");
+	}
+	return returnValue;
+	//// TODO use this line instead: return memcmp(&x + xIndex, &y + yIndex, length) == 0;*/
 }
 
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength)
