@@ -580,16 +580,14 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 		goto finally;
 	}
 
-
-
-	//// TODO you are here
-	//// TODO follow the same error handling pattern as the above 2 methods
 	int bytesWritten;
 	error = ravudetfprintf(fptr, &bytesWritten, contents);
 	if (error != SUCCESS)
 	{
 		switch (error)
 		{
+			//// TODO you are here
+			//// TODO follow the same error handling pattern as the above 2 methods
 			default:
 				returnValue = writeToFileError_BUG;
 		}
