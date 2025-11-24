@@ -297,9 +297,6 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], 
 					{
 						break;
 					}
-				case mksubdirError_ENOMEM:
-					returnValue = mkdirectorytraversalError_ENOMEM;
-					break;
 				case mksubdirError_ENOSPC:
 					returnValue = mkdirectorytraversalError_ENOSPC;
 					break;
@@ -308,6 +305,9 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], 
 					break;
 				case mksubdirError_EROFS:
 					returnValue = mkdirectorytraversalError_EROFS;
+					break;
+				case mksubdirError_ENOMEM:
+					returnValue = mkdirectorytraversalError_ENOMEM;
 					break;
 				default:
 					returnValue = mkdirectorytraversalError_BUG;
@@ -324,7 +324,41 @@ finally:
 
 //// TODO sqllite c repo so that you can get good practices?
 
-int writeToFile(const char filePath[], int pathLength, const char contents[])
+enum ravudetfopenError
+{
+	ravudetfopenError_BUG = 1,
+};
+
+enum ravudetfopenError ravudetfopen(const char filePath[], const char* mode, const FILE* fileHandle)
+{
+	enum ravudetfopenError returnValue = SUCCESS;
+
+#pragma warning(suppress : 4996)
+	fileHandle = fopen(filePath, mode);
+
+	if (fileHandle == NULL)
+	{
+		int fopenError = errno;
+		switch (fopenError)
+		{
+			default:
+				returnValue = ravudetfopenError_BUG;
+				break;
+		}
+
+		goto finally;
+	}
+
+finally:
+	return returnValue;
+}
+
+enum writeToFileError
+{
+	writeToFileError_BUG = 1,
+};
+
+enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[])
 {
 	//// TODO you are here
 	//// TODO follow the same error handling pattern as the above 2 methods
@@ -333,7 +367,9 @@ int writeToFile(const char filePath[], int pathLength, const char contents[])
 	//// FILE* fptr;
 	//// fptr = fopen(path, "a");
 
-	FILE* fptr = fopen(filePath, "a");
+	FILE* fptr;
+	fptr = fopen(filePath, "a");
+
 	if (fptr == NULL)
 	{
 		int error = errno;
