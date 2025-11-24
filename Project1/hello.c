@@ -425,25 +425,15 @@ enum writeToFileError
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[])
 {
 	enum writeToFileError returnValue = SUCCESS;
+	int error;
 
 	//// TODO you are here
 	//// TODO follow the same error handling pattern as the above 2 methods
 	
-	//// TODO separating the declaration from the initialization causes an error for some reason
-	//// FILE* fptr;
-	//// fptr = fopen(path, "a");
-	
-	FILE* fptr = fopen(filePath, "a");
-
-	if (fptr == NULL)
+	FILE* fptr;
+	error = ravudetfopen(filePath, "a", &fptr);
+	if (error != SUCCESS)
 	{
-		int error = errno;
-		if (error == 2)
-		{
-			
-		}
-
-		return error; //// TODO i think this returns the pointer to the _errno function or something
 	}
 
 	int error = fprintf(fptr, contents);
