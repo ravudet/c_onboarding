@@ -258,13 +258,13 @@ enum mkdirectorytraversalError
 
 enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength)
 {
-	//// TODO you are here
-	//// TODO follow the same error handling pattern as the above 2 methods
-	char delimiter[] = "\\";
+	const char delimiter[] = "\\";
+
 	enum mkdirectorytraversalError returnValue = SUCCESS;
+	int error;
 
 	int parentDirectoryEndIndex;
-	enum mksubdirError error = mksubdirError_ENOENT;
+	error = mksubdirError_ENOENT;
 	while (error == mksubdirError_ENOENT)
 	{
 		error = mksubdir(directoryPath, pathLength - 1);
@@ -326,6 +326,9 @@ finally:
 
 int writeToFile(const char filePath[], int pathLength, const char contents[])
 {
+	//// TODO you are here
+	//// TODO follow the same error handling pattern as the above 2 methods
+	
 	//// TODO separating the declaration from the initialization causes an error for some reason
 	//// FILE* fptr;
 	//// fptr = fopen(path, "a");
