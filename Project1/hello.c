@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -417,9 +418,98 @@ finally:
 	return returnValue;
 }
 
+enum ravudetfprintfError
+{
+	ravudetfprintfError_BUG = 1,
+	ravudetfprintfError_EAGAIN,
+	ravudetfprintfError_EBADF,
+	ravudetfprintfError_EFBIG,
+	ravudetfprintfError_EINTR,
+	ravudetfprintfError_EIO,
+	ravudetfprintfError_ENOSPC,
+	ravudetfprintfError_EPIPE,
+	ravudetfprintfError_ENOMEM,
+	ravudetfprintfError_ENXIO,
+	ravudetfprintfError_EILSEQ,
+	ravudetfprintfError_EOVERFLOW,
+};
+
+enum ravudetfprintfError ravudetfprintf(FILE* stream, int* bytesWritten, const char* format, ...)
+{
+	enum ravudetfprintfError returnValue = SUCCESS;
+
+	va_list vl;
+	va_start(vl, format);
+
+	int error = vfprintf(stream, format, vl);
+	if (error < 0)
+	{
+		switch (error)
+		{
+			case EAGAIN:
+				returnValue = ravudetfprintfError_EAGAIN;
+				break;
+			case EBADF:
+				returnValue = ravudetfprintfError_EBADF;
+				break;
+			case EFBIG:
+				returnValue = ravudetfprintfError_EFBIG;
+				break;
+			case EINTR:
+				returnValue = ravudetfprintfError_EINTR;
+				break;
+			case EIO:
+				returnValue = ravudetfprintfError_EIO;
+				break;
+			case ENOSPC:
+				returnValue = ravudetfprintfError_ENOSPC;
+				break;
+			case EPIPE:
+				returnValue = ravudetfprintfError_EPIPE;
+				break;
+			case ENOMEM:
+				returnValue = ravudetfprintfError_ENOMEM;
+				break;
+			case ENXIO:
+				returnValue = ravudetfprintfError_ENXIO;
+				break;
+			case EILSEQ:
+				returnValue = ravudetfprintfError_EILSEQ;
+				break;
+			case EOVERFLOW:
+				returnValue = ravudetfprintfError_EOVERFLOW;
+			default:
+				returnValue = ravudetfprintfError_BUG;
+		}
+
+		goto finally;
+	}
+
+	*bytesWritten = error;
+
+finally:
+	return returnValue;
+}
+
 enum writeToFileError
 {
 	writeToFileError_BUG = 1,
+	writeToFileError_EACCES,
+	writeToFileError_EINTR,
+	writeToFileError_EISDIR,
+	writeToFileError_ELOOP,
+	writeToFileError_EMFILE,
+	writeToFileError_ENAMETOOLONG,
+	writeToFileError_ENFILE,
+	writeToFileError_ENOENT,
+	writeToFileError_ENOSPC,
+	writeToFileError_ENOTDIR,
+	writeToFileError_ENXIO,
+	writeToFileError_EOVERFLOW,
+	writeToFileError_EROFS,
+	writeToFileError_EINVAL,
+	writeToFileError_ENOMEM,
+	writeToFileError_ETXTBSY,
 };
 
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[])
@@ -427,16 +517,76 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	enum writeToFileError returnValue = SUCCESS;
 	int error;
 
-	//// TODO you are here
-	//// TODO follow the same error handling pattern as the above 2 methods
-	
 	FILE* fptr;
 	error = ravudetfopen(filePath, "a", &fptr);
 	if (error != SUCCESS)
 	{
+		switch (error)
+		{
+			case ravudetfopenError_EACCES:
+				returnValue = writeToFileError_EACCES;
+				break;
+			case ravudetfopenError_EINTR:
+				returnValue = writeToFileError_EINTR;
+				break;
+			case ravudetfopenError_EISDIR:
+				returnValue = writeToFileError_EISDIR;
+				break;
+			case ravudetfopenError_ELOOP:
+				returnValue = writeToFileError_ELOOP;
+				break;
+			case ravudetfopenError_EMFILE:
+				returnValue = writeToFileError_EMFILE;
+				break;
+			case ravudetfopenError_ENAMETOOLONG:
+				returnValue = writeToFileError_ENAMETOOLONG;
+				break;
+			case ravudetfopenError_ENFILE:
+				returnValue = writeToFileError_ENFILE;
+				break;
+			case ravudetfopenError_ENOENT:
+				returnValue = writeToFileError_ENOENT;
+				break;
+			case ravudetfopenError_ENOSPC:
+				returnValue = writeToFileError_ENOSPC;
+				break;
+			case ravudetfopenError_ENOTDIR:
+				returnValue = writeToFileError_ENOTDIR;
+				break;
+			case ravudetfopenError_ENXIO:
+				returnValue = writeToFileError_ENXIO;
+				break;
+			case ravudetfopenError_EOVERFLOW:
+				returnValue = writeToFileError_EOVERFLOW;
+				break;
+			case ravudetfopenError_EROFS:
+				returnValue = writeToFileError_EROFS;
+				break;
+			case ravudetfopenError_EINVAL:
+				returnValue = writeToFileError_EINVAL;
+				break;
+			case ravudetfopenError_ENOMEM:
+				returnValue = writeToFileError_ENOMEM;
+				break;
+			case ravudetfopenError_ETXTBSY:
+				returnValue = writeToFileError_ETXTBSY;
+				break;
+			default:
+				returnValue = writeToFileError_BUG;
+				break;
+
+		}
+
+		goto finally;
 	}
 
-	int error = fprintf(fptr, contents);
+
+
+	//// TODO you are here
+	//// TODO follow the same error handling pattern as the above 2 methods
+
+
+	error = fprintf(fptr, contents);
 	if (error < 0)
 	{
 		return errno;
@@ -448,7 +598,8 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 		return errno;
 	}
 
-	return 0;
+finally:
+	return returnValue;
 }
 
 int writeToFilePath(const char path[], int pathLength, const char contents[])
@@ -464,10 +615,11 @@ int main()
 {
 	//// TODO make is so that you can use a path that doesn't exist
 	//// TODO write a unit test to confirm that the file was written
-	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
+	char path[] = "c:\\users\\ravud\\test\\test2\\";
 	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));
 
-	int error = writeToFile(path, sizeof(path) / sizeof(path[0]), "contents");
+	char path2[] = "c:\\users\\ravud\\test\\test2\\test.txt";
+	int error = writeToFile(path2, sizeof(path2) / sizeof(path2[0]), "contents");
 	if (error != 0)
 	{
 		printf("ERROR! %d", error); //// TODO https://learn.microsoft.com/en-us/cpp/c-runtime-library/errno-constants?view=msvc-170 or you can just look directly in `errno.h`
