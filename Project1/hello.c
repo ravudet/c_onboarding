@@ -327,20 +327,84 @@ finally:
 enum ravudetfopenError
 {
 	ravudetfopenError_BUG = 1,
+	ravudetfopenError_EACCES,
+	ravudetfopenError_EINTR,
+	ravudetfopenError_EISDIR,
+	ravudetfopenError_ELOOP,
+	ravudetfopenError_EMFILE,
+	ravudetfopenError_ENAMETOOLONG,
+	ravudetfopenError_ENFILE,
+	ravudetfopenError_ENOENT,
+	ravudetfopenError_ENOSPC,
+	ravudetfopenError_ENOTDIR,
+	ravudetfopenError_ENXIO,
+	ravudetfopenError_EOVERFLOW,
+	ravudetfopenError_EROFS,
+	ravudetfopenError_EINVAL,
+	ravudetfopenError_ENOMEM,
+	ravudetfopenError_ETXTBSY,
 };
 
-enum ravudetfopenError ravudetfopen(const char filePath[], const char* mode, const FILE* fileHandle)
+enum ravudetfopenError ravudetfopen(const char filePath[], const char* mode, const FILE** fileHandle)
 {
 	enum ravudetfopenError returnValue = SUCCESS;
 
-#pragma warning(suppress : 4996)
-	fileHandle = fopen(filePath, mode);
+#pragma warning(suppress : 4996) // we are preferring portability over supposed "security"
+	*fileHandle = fopen(filePath, mode);
 
 	if (fileHandle == NULL)
 	{
 		int fopenError = errno;
 		switch (fopenError)
 		{
+			case EACCES:
+				returnValue = ravudetfopenError_EACCES;
+				break;
+			case EINTR:
+				returnValue = ravudetfopenError_EINTR;
+				break;
+			case EISDIR:
+				returnValue = ravudetfopenError_EISDIR;
+				break;
+			case ELOOP:
+				returnValue = ravudetfopenError_ELOOP;
+				break;
+			case EMFILE:
+				returnValue = ravudetfopenError_EMFILE;
+				break;
+			case ENAMETOOLONG:
+				returnValue = ravudetfopenError_ENAMETOOLONG;
+				break;
+			case ENFILE:
+				returnValue = ravudetfopenError_ENFILE;
+				break;
+			case ENOENT:
+				returnValue = ravudetfopenError_ENOENT;
+				break;
+			case ENOSPC:
+				returnValue = ravudetfopenError_ENOSPC;
+				break;
+			case ENOTDIR:
+				returnValue = ravudetfopenError_ENOTDIR;
+				break;
+			case ENXIO:
+				returnValue = ravudetfopenError_ENXIO;
+				break;
+			case EOVERFLOW:
+				returnValue = ravudetfopenError_EOVERFLOW;
+				break;
+			case EROFS:
+				returnValue = ravudetfopenError_EROFS;
+				break;
+			case EINVAL:
+				returnValue = ravudetfopenError_EINVAL;
+				break;
+			case ENOMEM:
+				returnValue = ravudetfopenError_ENOMEM;
+				break;
+			case ETXTBSY:
+				returnValue = ravudetfopenError_ETXTBSY;
+				break;
 			default:
 				returnValue = ravudetfopenError_BUG;
 				break;
@@ -360,15 +424,16 @@ enum writeToFileError
 
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[])
 {
+	enum writeToFileError returnValue = SUCCESS;
+
 	//// TODO you are here
 	//// TODO follow the same error handling pattern as the above 2 methods
 	
 	//// TODO separating the declaration from the initialization causes an error for some reason
 	//// FILE* fptr;
 	//// fptr = fopen(path, "a");
-
-	FILE* fptr;
-	fptr = fopen(filePath, "a");
+	
+	FILE* fptr = fopen(filePath, "a");
 
 	if (fptr == NULL)
 	{
