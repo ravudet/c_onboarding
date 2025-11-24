@@ -36,7 +36,7 @@ enum substringError
 };
 
 //// TODO can you have a macro or something to tell the compiler that `substring` is not null if `0` is returned?
-enum substringError substring(const char string[], const int endIndex, char** substringPointer)
+enum substringError substring(const char string[], const int endIndex, char* substringPointer[])
 {
 	enum substringError returnValue = SUCCESS;
 
