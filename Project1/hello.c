@@ -120,8 +120,8 @@ enum ravudetmkdirError ravudetmkdir(const char path[])
 	int mkdirError = mkdir(path);
 	if (mkdirError == -1)
 	{
-		mkdirError = errno;
-		switch (mkdirError)
+		int error = errno;
+		switch (error)
 		{
 		case EACCES:
 			returnValue = ravudetmkdirError_EACCES;
@@ -355,8 +355,8 @@ enum ravudetfopenError ravudetfopen(const char filePath[], const char* mode, con
 
 	if (fileHandle == NULL)
 	{
-		int fopenError = errno;
-		switch (fopenError)
+		int error = errno;
+		switch (error)
 		{
 			case EACCES:
 				returnValue = ravudetfopenError_EACCES;
@@ -441,9 +441,10 @@ enum ravudetfprintfError ravudetfprintf(FILE* stream, int* bytesWritten, const c
 	va_list vl;
 	va_start(vl, format);
 
-	int error = vfprintf(stream, format, vl);
-	if (error < 0)
+	int potentialBytesWritten = vfprintf(stream, format, vl);
+	if (potentialBytesWritten < 0)
 	{
+		int error = errno;
 		switch (error)
 		{
 			case EAGAIN:
@@ -478,14 +479,79 @@ enum ravudetfprintfError ravudetfprintf(FILE* stream, int* bytesWritten, const c
 				break;
 			case EOVERFLOW:
 				returnValue = ravudetfprintfError_EOVERFLOW;
+				break;
 			default:
 				returnValue = ravudetfprintfError_BUG;
+				break;
 		}
 
 		goto finally;
 	}
 
-	*bytesWritten = error;
+	*bytesWritten = potentialBytesWritten;
+
+finally:
+	return returnValue;
+}
+
+enum ravudetfcloseError
+{
+	ravudetfcloseError_BUG = 1,
+	ravudetfcloseError_EAGAIN,
+	ravudetfcloseError_EBADF,
+	ravudetfcloseError_EFBIG,
+	ravudetfcloseError_EINTR,
+	ravudetfcloseError_EIO,
+	ravudetfcloseError_ENOMEM,
+	ravudetfcloseError_ENOSPC,
+	ravudetfcloseError_EPIPE,
+	ravudetfcloseError_ENXIO,
+};
+
+enum ravudetfcloseError ravudetfclose(FILE* stream)
+{
+	enum ravudetfcloseError returnValue = SUCCESS;
+
+	int fcloseError = fclose(stream);
+	if (fcloseError != 0)
+	{
+		int error = errno;
+		switch (error)
+		{
+			case EAGAIN:
+				returnValue = ravudetfcloseError_EAGAIN;
+				break;
+			case EBADF:
+				returnValue = ravudetfcloseError_EBADF;
+				break;
+			case EFBIG:
+				returnValue = ravudetfcloseError_EFBIG;
+				break;
+			case EINTR:
+				returnValue = ravudetfcloseError_EINTR;
+				break;
+			case EIO:
+				returnValue = ravudetfcloseError_EIO;
+				break;
+			case ENOMEM:
+				returnValue = ravudetfcloseError_ENOMEM;
+				break;
+			case ENOSPC:
+				returnValue = ravudetfcloseError_ENOSPC;
+				break;
+			case EPIPE:
+				returnValue = ravudetfcloseError_EPIPE;
+				break;
+			case ENXIO:
+				returnValue = ravudetfcloseError_ENXIO;
+				break;
+			default:
+				returnValue = ravudetfcloseError_BUG;
+				break;
+		}
+		
+		goto finally;
+	}
 
 finally:
 	return returnValue;
@@ -495,7 +561,7 @@ enum writeToFileError
 {
 	writeToFileError_BUG = 1,
 	writeToFileError_EACCES,
-	writeToFileError_EINTR,
+	writeToFileError_OPEN_EINTR,
 	writeToFileError_EISDIR,
 	writeToFileError_ELOOP,
 	writeToFileError_EMFILE,
@@ -505,11 +571,27 @@ enum writeToFileError
 	writeToFileError_ENOSPC,
 	writeToFileError_ENOTDIR,
 	writeToFileError_ENXIO,
-	writeToFileError_EOVERFLOW,
+	writeToFileError_OPEN_EOVERFLOW,
 	writeToFileError_EROFS,
 	writeToFileError_EINVAL,
 	writeToFileError_ENOMEM,
 	writeToFileError_ETXTBSY,
+	writeToFileError_EAGAIN,
+	writeToFileError_EFBIG,
+	writeToFileError_PRINT_EINTR,
+	writeToFileError_EIO,
+	writeToFileError_EPIPE,
+	writeToFileError_EILSEQ,
+	writeToFileError_PRINT_EOVERFLOW,
+
+	writeToFileError_CLOSE_EAGAIN,
+	writeToFileError_CLOSE_EFBIG,
+	writeToFileError_CLOSE_EINTR,
+	writeToFileError_CLOSE_EIO,
+	writeToFileError_CLOSE_ENOMEM,
+	writeToFileError_CLOSE_ENOSPC,
+	writeToFileError_CLOSE_EPIPE,
+	writeToFileError_CLOSE_ENXIO,
 };
 
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[])
@@ -527,7 +609,7 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 				returnValue = writeToFileError_EACCES;
 				break;
 			case ravudetfopenError_EINTR:
-				returnValue = writeToFileError_EINTR;
+				returnValue = writeToFileError_OPEN_EINTR;
 				break;
 			case ravudetfopenError_EISDIR:
 				returnValue = writeToFileError_EISDIR;
@@ -557,7 +639,7 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 				returnValue = writeToFileError_ENXIO;
 				break;
 			case ravudetfopenError_EOVERFLOW:
-				returnValue = writeToFileError_EOVERFLOW;
+				returnValue = writeToFileError_OPEN_EOVERFLOW;
 				break;
 			case ravudetfopenError_EROFS:
 				returnValue = writeToFileError_EROFS;
@@ -586,19 +668,82 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	{
 		switch (error)
 		{
-			//// TODO you are here
-			//// TODO follow the same error handling pattern as the above 2 methods
+			case ravudetfprintfError_EAGAIN:
+				returnValue = writeToFileError_EAGAIN;
+				break;
+			case ravudetfprintfError_EFBIG:
+				returnValue = writeToFileError_EFBIG;
+				break;
+			case ravudetfprintfError_EINTR:
+				returnValue = writeToFileError_PRINT_EINTR;
+				break;
+			case ravudetfprintfError_EIO:
+				returnValue = writeToFileError_EIO;
+				break;
+			case ravudetfprintfError_ENOSPC:
+				returnValue = writeToFileError_ENOSPC;
+				break;
+			case ravudetfprintfError_EPIPE:
+				returnValue = writeToFileError_EPIPE;
+				break;
+			case ravudetfprintfError_ENOMEM:
+				returnValue = writeToFileError_ENOMEM;
+				break;
+			case ravudetfprintfError_ENXIO:
+				returnValue = writeToFileError_ENXIO;
+				break;
+			case ravudetfprintfError_EILSEQ:
+				returnValue = writeToFileError_EILSEQ;
+				break;
+			case ravudetfprintfError_EOVERFLOW:
+				returnValue = writeToFileError_PRINT_EOVERFLOW;
+				break;
 			default:
 				returnValue = writeToFileError_BUG;
+				break;
 		}
 
 		goto finally;
 	}
 
-	error = fclose(fptr);
-	if (error != 0)
+	//// TODO you are here
+	//// TODO follow the same error handling pattern as the above 2 methods
+	error = ravudetfclose(fptr);
+	if (error != SUCCESS)
 	{
-		return errno;
+		switch (error)
+		{
+			case ravudetfcloseError_EAGAIN:
+				returnValue = writeToFileError_CLOSE_EAGAIN;
+				break;
+			case ravudetfcloseError_EFBIG:
+				returnValue = writeToFileError_CLOSE_EFBIG;
+				break;
+			case ravudetfcloseError_EINTR:
+				returnValue = writeToFileError_CLOSE_EINTR;
+				break;
+			case ravudetfcloseError_EIO:
+				returnValue = writeToFileError_CLOSE_EIO;
+				break;
+			case ravudetfcloseError_ENOMEM:
+				returnValue = writeToFileError_CLOSE_ENOMEM;
+				break;
+			case ravudetfcloseError_ENOSPC:
+				returnValue = writeToFileError_CLOSE_ENOSPC;
+				break;
+			case ravudetfcloseError_EPIPE:
+				returnValue = writeToFileError_CLOSE_EPIPE;
+				break;
+			case ravudetfcloseError_ENXIO:
+				returnValue = writeToFileError_CLOSE_ENXIO;
+				break;
+			default:
+				returnValue = writeToFileError_BUG;
+				break;
+		}
+
+		//// TODO what can my caller do if there's a failure to close the file?
+		goto finally;
 	}
 
 finally:
