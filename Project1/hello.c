@@ -750,6 +750,38 @@ finally:
 enum writeToFilePathError
 {
 	writeToFilePathError_BUG = 1,
+	writeToFilePathError_EACCES,
+	writeToFilePathError_OPEN_EINTR,
+	writeToFilePathError_EISDIR,
+	writeToFilePathError_ELOOP,
+	writeToFilePathError_EMFILE,
+	writeToFilePathError_ENAMETOOLONG,
+	writeToFilePathError_ENFILE,
+	writeToFilePathError_ENOENT,
+	writeToFilePathError_ENOSPC,
+	writeToFilePathError_ENOTDIR,
+	writeToFilePathError_ENXIO,
+	writeToFilePathError_OPEN_EOVERFLOW,
+	writeToFilePathError_EROFS,
+	writeToFilePathError_EINVAL,
+	writeToFilePathError_ENOMEM,
+	writeToFilePathError_ETXTBSY,
+	writeToFilePathError_EAGAIN,
+	writeToFilePathError_EFBIG,
+	writeToFilePathError_PRINT_EINTR,
+	writeToFilePathError_EIO,
+	writeToFilePathError_EPIPE,
+	writeToFilePathError_EILSEQ,
+	writeToFilePathError_PRINT_EOVERFLOW,
+	writeToFilePathError_CLOSE_EAGAIN,
+	writeToFilePathError_CLOSE_EFBIG,
+	writeToFilePathError_CLOSE_EINTR,
+	writeToFilePathError_CLOSE_EIO,
+	writeToFilePathError_CLOSE_ENOMEM,
+	writeToFilePathError_CLOSE_ENOSPC,
+	writeToFilePathError_CLOSE_EPIPE,
+	writeToFilePathError_CLOSE_ENXIO,
+	writeToFilePathError_EMLINK,
 };
 
 enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[])
@@ -757,25 +789,152 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 	enum writeToFilePathError returnValue = SUCCESS;
 	int error;
 
-	error = writeToFile(path, pathLength, contents);
-	if (error != SUCCESS)
+	int parentDirectoryEndIndex;
+	int something;
+	while (true)
 	{
-		switch (error)
+		error = writeToFile(path, pathLength, contents);
+		if (error != SUCCESS)
 		{
-			default:
-				returnValue = writeToFileError_BUG;
-				break;
+			switch (error)
+			{
+				case writeToFileError_EACCES:
+					returnValue = writeToFilePathError_EACCES;
+					break;
+				case writeToFileError_OPEN_EINTR:
+					returnValue = writeToFilePathError_OPEN_EINTR;
+					break;
+				case writeToFileError_EISDIR:
+					returnValue = writeToFilePathError_EISDIR;
+					break;
+				case writeToFileError_ELOOP:
+					returnValue = writeToFilePathError_ELOOP;
+					break;
+				case writeToFileError_EMFILE:
+					returnValue = writeToFilePathError_EMFILE;
+					break;
+				case writeToFileError_ENAMETOOLONG:
+					returnValue = writeToFilePathError_ENAMETOOLONG;
+					break;
+				case writeToFileError_ENFILE:
+					returnValue = writeToFilePathError_ENFILE;
+					break;
+				case writeToFileError_ENOENT:
+					parentDirectoryEndIndex = getParentDirectory(path, pathLength - 1, "\\", 1);
+					error = mkdirectorytraversal(path, parentDirectoryEndIndex);
+					if (error != SUCCESS)
+					{
+						switch (error)
+						{
+							case mkdirectorytraversalError_EACCES:
+								returnValue = writeToFilePathError_EACCES;
+								break;
+							case mkdirectorytraversalError_ELOOP:
+								returnValue = writeToFilePathError_ELOOP;
+								break;
+							case mkdirectorytraversalError_EMLINK:
+								returnValue = writeToFilePathError_EMLINK;
+								break;
+							case mkdirectorytraversalError_ENAMETOOLONG:
+								returnValue = writeToFilePathError_ENAMETOOLONG;
+								break;
+							case mkdirectorytraversalError_ENOSPC:
+								returnValue = writeToFilePathError_ENOSPC;
+								break;
+							case mkdirectorytraversalError_ENOTDIR:
+								returnValue = writeToFilePathError_ENOTDIR;
+								break;
+							case mkdirectorytraversalError_EROFS:
+								returnValue = writeToFilePathError_EROFS;
+								break;
+							case mkdirectorytraversalError_ENOMEM:
+								returnValue = writeToFilePathError_ENOMEM;
+								break;
+							default:
+								returnValue = writeToFilePathError_BUG;
+								break;
+						}
+
+						break;
+					}
+
+					continue;
+				case writeToFileError_ENOSPC:
+					returnValue = writeToFilePathError_ENOSPC;
+					break;
+				case writeToFileError_ENOTDIR:
+					returnValue = writeToFilePathError_ENOTDIR;
+					break;
+				case writeToFileError_ENXIO:
+					returnValue = writeToFilePathError_ENXIO;
+					break;
+				case writeToFileError_OPEN_EOVERFLOW:
+					returnValue = writeToFilePathError_OPEN_EOVERFLOW;
+					break;
+				case writeToFileError_EROFS:
+					returnValue = writeToFilePathError_EROFS;
+					break;
+				case writeToFileError_EINVAL:
+					returnValue = writeToFilePathError_EINVAL;
+					break;
+				case writeToFileError_ENOMEM:
+					returnValue = writeToFilePathError_ENOMEM;
+					break;
+				case writeToFileError_ETXTBSY:
+					returnValue = writeToFilePathError_ETXTBSY;
+					break;
+				case writeToFileError_EAGAIN:
+					returnValue = writeToFilePathError_EAGAIN;
+					break;
+				case writeToFileError_EFBIG:
+					returnValue = writeToFilePathError_EFBIG;
+					break;
+				case writeToFileError_PRINT_EINTR:
+					returnValue = writeToFilePathError_PRINT_EINTR;
+					break;
+				case writeToFileError_EIO:
+					returnValue = writeToFilePathError_EIO;
+					break;
+				case writeToFileError_EPIPE:
+					returnValue = writeToFilePathError_EPIPE;
+					break;
+				case writeToFileError_EILSEQ:
+					returnValue = writeToFilePathError_EILSEQ;
+					break;
+				case writeToFileError_PRINT_EOVERFLOW:
+					returnValue = writeToFilePathError_PRINT_EOVERFLOW;
+					break;
+				case writeToFileError_CLOSE_EAGAIN:
+					returnValue = writeToFilePathError_CLOSE_EAGAIN;
+					break;
+				case writeToFileError_CLOSE_EFBIG:
+					returnValue = writeToFilePathError_CLOSE_EFBIG;
+					break;
+				case writeToFileError_CLOSE_EINTR:
+					returnValue = writeToFilePathError_CLOSE_EINTR;
+					break;
+				case writeToFileError_CLOSE_EIO:
+					returnValue = writeToFilePathError_CLOSE_EIO;
+					break;
+				case writeToFileError_CLOSE_ENOMEM:
+					returnValue = writeToFilePathError_CLOSE_ENOMEM;
+					break;
+				case writeToFileError_CLOSE_ENOSPC:
+					returnValue = writeToFilePathError_CLOSE_ENOSPC;
+					break;
+				case writeToFileError_CLOSE_EPIPE:
+					returnValue = writeToFilePathError_CLOSE_EPIPE;
+					break;
+				case writeToFileError_CLOSE_ENXIO:
+					returnValue = writeToFilePathError_CLOSE_ENXIO;
+					break;
+				default:
+					returnValue = writeToFileError_BUG;
+					break;
+			}
+
+			goto finally;
 		}
-
-		goto finally;
-	}
-
-	//// TODO you are here
-	//// TODO follow the same error handling pattern as the above methods
-	int error = writeToFile(path, pathLength, contents);
-	if (error == 2)
-	{
-		mkdirectorytraversal(path, pathLength);
 	}
 
 finally:
@@ -786,6 +945,7 @@ int main()
 {
 	//// TODO make is so that you can use a path that doesn't exist
 	//// TODO separate into a few files
+	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	char path[] = "c:\\users\\ravud\\test\\test2\\";
 	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));
