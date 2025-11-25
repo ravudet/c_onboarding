@@ -353,7 +353,7 @@ enum ravudetfopenError ravudetfopen(const char filePath[], const char* mode, con
 #pragma warning(suppress : 4996) // we are preferring portability over supposed "security"
 	*fileHandle = fopen(filePath, mode);
 
-	if (fileHandle == NULL)
+	if (*fileHandle == NULL)
 	{
 		int error = errno;
 		switch (error)
@@ -790,7 +790,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 	int error;
 
 	int parentDirectoryEndIndex;
-	int something;
 	while (true)
 	{
 		error = writeToFile(path, pathLength, contents);
@@ -935,6 +934,8 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 
 			goto finally;
 		}
+
+		break;
 	}
 
 finally:
@@ -947,11 +948,11 @@ int main()
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
-	char path[] = "c:\\users\\ravud\\test\\test2\\";
-	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));
+	/*char path[] = "c:\\users\\ravud\\test\\test2\\";
+	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));*/
 
 	char path2[] = "c:\\users\\ravud\\test\\test2\\test.txt";
-	int error = writeToFile(path2, sizeof(path2) / sizeof(path2[0]), "contents");
+	int error = writeToFilePath(path2, sizeof(path2) / sizeof(path2[0]), "contents");
 	if (error != 0)
 	{
 		printf("ERROR! %d", error); //// TODO https://learn.microsoft.com/en-us/cpp/c-runtime-library/errno-constants?view=msvc-170 or you can just look directly in `errno.h`
