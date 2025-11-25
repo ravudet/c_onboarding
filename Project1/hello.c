@@ -583,7 +583,6 @@ enum writeToFileError
 	writeToFileError_EPIPE,
 	writeToFileError_EILSEQ,
 	writeToFileError_PRINT_EOVERFLOW,
-
 	writeToFileError_CLOSE_EAGAIN,
 	writeToFileError_CLOSE_EFBIG,
 	writeToFileError_CLOSE_EINTR,
@@ -748,8 +747,29 @@ finally:
 	return returnValue;
 }
 
-int writeToFilePath(const char path[], int pathLength, const char contents[])
+enum writeToFilePathError
 {
+	writeToFilePathError_BUG = 1,
+};
+
+enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[])
+{
+	enum writeToFilePathError returnValue = SUCCESS;
+	int error;
+
+	error = writeToFile(path, pathLength, contents);
+	if (error != SUCCESS)
+	{
+		switch (error)
+		{
+			default:
+				returnValue = writeToFileError_BUG;
+				break;
+		}
+
+		goto finally;
+	}
+
 	//// TODO you are here
 	//// TODO follow the same error handling pattern as the above methods
 	int error = writeToFile(path, pathLength, contents);
@@ -757,6 +777,9 @@ int writeToFilePath(const char path[], int pathLength, const char contents[])
 	{
 		mkdirectorytraversal(path, pathLength);
 	}
+
+finally:
+	return returnValue;
 }
 
 int main()
