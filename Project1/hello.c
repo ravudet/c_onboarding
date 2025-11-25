@@ -942,14 +942,36 @@ finally:
 	return returnValue;
 }
 
-#define LENGTH(array) (sizeof(array) / sizeof(array[0]))
+#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0])
+
+#define LENGTH(array) _Generic((array), \
+	char*: ARRAY_LENGTH(array) \
+)(array)
+
+
+#define SQUARE_INT(x)   ((x) * (x))
+#define SQUARE_DOUBLE(x) ((x) * (x))
+#define SQUARE_FLOAT(x)  ((x) * (x))
+
+// --- Generic macro that nests the above ---
+#define SQUARE(x) _Generic((x), \
+    int:    SQUARE_INT(x), \
+    double: SQUARE_DOUBLE(x), \
+    float:  SQUARE_FLOAT(x) \
+)
+
 
 int main()
 {
+	//// TODO try to implement the length macro
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
+
+	//// TODO you are here
+	int value = 42;
+	SQUARE(42);
 
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
 	int error = writeToFilePath(path, LENGTH(path), "contents");
