@@ -944,7 +944,6 @@ finally:
 
 int main()
 {
-	//// TODO make is so that you can use a path that doesn't exist
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
