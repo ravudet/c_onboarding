@@ -785,6 +785,7 @@ finally:
 int main()
 {
 	//// TODO make is so that you can use a path that doesn't exist
+	//// TODO separate into a few files
 	//// TODO write a unit test to confirm that the file was written
 	char path[] = "c:\\users\\ravud\\test\\test2\\";
 	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));
