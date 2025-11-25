@@ -942,16 +942,17 @@ finally:
 	return returnValue;
 }
 
+#define LENGTH(array) (sizeof(array) / sizeof(array[0]))
+
 int main()
 {
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
-	/*char path[] = "c:\\users\\ravud\\test\\test2\\";
-	mkdirectorytraversal(path, sizeof(path) / sizeof(path[0]));*/
+	//// TODO go through TODOs
 
-	char path2[] = "c:\\users\\ravud\\test\\test2\\test.txt";
-	int error = writeToFilePath(path2, sizeof(path2) / sizeof(path2[0]), "contents");
+	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
+	int error = writeToFilePath(path, LENGTH(path), "contents");
 	if (error != 0)
 	{
 		printf("ERROR! %d", error); //// TODO https://learn.microsoft.com/en-us/cpp/c-runtime-library/errno-constants?view=msvc-170 or you can just look directly in `errno.h`
