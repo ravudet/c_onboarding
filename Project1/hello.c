@@ -706,8 +706,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 		goto finally;
 	}
 
-	//// TODO you are here
-	//// TODO follow the same error handling pattern as the above 2 methods
 	error = ravudetfclose(fptr);
 	if (error != SUCCESS)
 	{
@@ -752,6 +750,8 @@ finally:
 
 int writeToFilePath(const char path[], int pathLength, const char contents[])
 {
+	//// TODO you are here
+	//// TODO follow the same error handling pattern as the above methods
 	int error = writeToFile(path, pathLength, contents);
 	if (error == 2)
 	{
