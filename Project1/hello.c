@@ -927,7 +927,7 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 					returnValue = writeToFilePathError_CLOSE_ENXIO;
 					break;
 				default:
-					returnValue = writeToFileError_BUG;
+					returnValue = writeToFilePathError_BUG;
 					break;
 			}
 
@@ -992,7 +992,7 @@ enum mainError main()
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
 
-	enum writeToFilePathError returnValue = SUCCESS;
+	enum mainError returnValue = SUCCESS;
 	int error;
 
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
