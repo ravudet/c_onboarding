@@ -964,6 +964,7 @@ finally:
 int main()
 {
 	//// TODO try to implement the length macro
+	//// TODO handle the errors in this main
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
