@@ -942,40 +942,26 @@ finally:
 	return returnValue;
 }
 
-#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0])
+#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
+//// TODO this requires c11; are you ok with that?
+//// TODO this doesn't actually check for other pointer types? 
 #define LENGTH(array) _Generic((array), \
-	char*: ARRAY_LENGTH(array) \
+	char[]: ARRAY_LENGTH(array) \
 )(array)
-
-
-#define SQUARE_INT(x)   ((x) * (x))
-#define SQUARE_DOUBLE(x) ((x) * (x))
-#define SQUARE_FLOAT(x)  ((x) * (x))
-
-// --- Generic macro that nests the above ---
-#define SQUARE(x) _Generic((x), \
-    int:    SQUARE_INT(x), \
-    double: SQUARE_DOUBLE(x), \
-    float:  SQUARE_FLOAT(x) \
-)
 
 
 int main()
 {
-	//// TODO try to implement the length macro
 	//// TODO handle the errors in this main
+	//// TODO get rid of warnings
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
 
-	//// TODO you are here
-	int value = 42;
-	SQUARE(42);
-
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
-	int error = writeToFilePath(path, LENGTH(path), "contents");
+	int error = writeToFilePath(path, ARRAY_LENGTH(path), "contents");
 	if (error != 0)
 	{
 		printf("ERROR! %d", error); //// TODO https://learn.microsoft.com/en-us/cpp/c-runtime-library/errno-constants?view=msvc-170 or you can just look directly in `errno.h`
