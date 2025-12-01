@@ -971,7 +971,6 @@ enum mainError
 
 enum mainError main()
 {
-	//// TODO get rid of warnings
 	//// TODO separate into a few files
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
