@@ -11,20 +11,6 @@
 #include <sys/stat.h>
 #endif
 
-void print(int x)
-{
-	printf("Integer:");
-	printf(x);
-	printf("\n");
-}
-
-/*void print(double x)
-{
-	printf("Double:");
-	printf(x);
-	printf("\n");
-}*/
-
 // https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
 
 const int SUCCESS = 0;
@@ -36,7 +22,6 @@ enum substringError
 	substringError_ENOMEM,
 };
 
-//// TODO can you have a macro or something to tell the compiler that `substring` is not null if `0` is returned?
 enum substringError substring(const char string[], const int endIndex, char* substringPointer[])
 {
 	enum substringError returnValue = SUCCESS;
