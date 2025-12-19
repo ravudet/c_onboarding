@@ -1,8 +1,5 @@
 #include "strs.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 enum substringError substring(const char string[], const int endIndex, char* substringPointer[])
 {
 	enum substringError returnValue = SUCCESS;
