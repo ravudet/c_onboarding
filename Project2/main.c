@@ -1,8 +1,8 @@
 #include "main.h"
 
-#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
-
 // https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
+
+#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
 //// TODO this requires c11; are you ok with that?
 //// TODO this doesn't actually check for other pointer types? 
