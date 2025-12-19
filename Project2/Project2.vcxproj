@@ -124,11 +124,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="directories.c" />
     <ClCompile Include="errors.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="strs.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="directories.h" />
     <ClInclude Include="errors.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="strs.h" />

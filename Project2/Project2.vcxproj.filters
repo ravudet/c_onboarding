@@ -24,6 +24,9 @@
     <ClCompile Include="errors.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="directories.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="strs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="directories.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,6 @@
-/*#ifndef DIRECTORIES_H
-#define DIRECTORIES_H
+#pragma once
 
-#include <stdlib.h>
+/*#include <stdlib.h>
 #include <errno.h>
 
 #if defined _WIN32
@@ -11,11 +10,11 @@
 #endif
 
 #include "errors.h"
-#include "strs.h"
+#include "strs.h"*/
 
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength);
 
-enum ravudetmkdirError
+/*enum ravudetmkdirError
 {
 	ravudetmkdirError_BUG = 1,
 	ravudetmkdirError_NULLPOINTER,
@@ -59,6 +58,4 @@ enum mkdirectorytraversalError
 	mkdirectorytraversalError_EROFS,
 	mkdirectorytraversalError_ENOMEM,
 };
-enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength);
-
-#endif*/
+enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength);*/

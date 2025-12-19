@@ -1,4 +1,4 @@
-/*#include "directories.h"
+#include "directories.h"
 
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength)
 {
@@ -16,7 +16,7 @@ int getParentDirectory(const char path[], const int endIndex, const char directo
 	return parentIndex;
 }
 
-enum ravudetmkdirError ravudetmkdir(const char path[])
+/*enum ravudetmkdirError ravudetmkdir(const char path[])
 {
 	enum ravudetmkdirError returnValue = SUCCESS;
 
