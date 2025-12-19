@@ -1,4 +1,4 @@
-#include "main.h"
+#include "main_private.h"
 
 // https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
 

@@ -135,6 +135,7 @@
     <ClInclude Include="errors.h" />
     <ClInclude Include="files.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="main_private.h" />
     <ClInclude Include="strs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
