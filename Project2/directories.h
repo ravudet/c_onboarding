@@ -1,13 +1,6 @@
 #pragma once
 
-////#include <stdlib.h>
 #include <errno.h>
-
-/*#if defined _WIN32
-#include <direct.h>
-#elif defined __linux__
-#include <sys/stat.h>
-#endif*/
 
 #include "errors.h"
 #include "strs.h"
