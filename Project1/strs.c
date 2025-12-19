@@ -1,6 +1,6 @@
-/*#include "strs.h"
+#include "strs.h"
 
-enum substringError substring(const char string[], const int endIndex, char* substringPointer[])
+/*enum substringError substring(const char string[], const int endIndex, char* substringPointer[])
 {
 	enum substringError returnValue = SUCCESS;
 
@@ -32,9 +32,9 @@ enum substringError substring(const char string[], const int endIndex, char* sub
 	catch:
 	free(substring);
 	goto finally;
-}
+}*/
 
 bool substrcmp(const char x[], const int xStart, const char y[], const int yStart, const int length)
 {
 	return memcmp(x + xStart, y + yStart, length) == 0;
-}*/
+}
