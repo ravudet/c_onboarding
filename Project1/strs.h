@@ -1,12 +1,14 @@
-#ifndef STRS_H
-#define STRS_H
+#pragma once
+
+////#ifndef STRS_H
+////#define STRS_H
 
 ////#include <errno.h>
-#include <stdbool.h>
+////#include <stdbool.h>
 ////#include <stdlib.h>
-#include <string.h>
+////#include <string.h>
 
-////#include "errors.h"
+#include "errors.h"
 
 /*enum substringError
 {
@@ -15,6 +17,6 @@
 };
 enum substringError substring(const char string[], const int endIndex, char* substringPointer[]);*/
 
-bool substrcmp(const char x[], const int xStart, const char y[], const int yStart, const int length);
+////bool substrcmp(const char x[], const int xStart, const char y[], const int yStart, const int length);
 
-#endif
+////#endif

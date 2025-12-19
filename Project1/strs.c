@@ -34,7 +34,7 @@
 	goto finally;
 }*/
 
-bool substrcmp(const char x[], const int xStart, const char y[], const int yStart, const int length)
+/*bool substrcmp(const char x[], const int xStart, const char y[], const int yStart, const int length)
 {
 	return memcmp(x + xStart, y + yStart, length) == 0;
-}
+}*/
