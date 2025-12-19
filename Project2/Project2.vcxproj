@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="errors.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="strs.c" />
   </ItemGroup>

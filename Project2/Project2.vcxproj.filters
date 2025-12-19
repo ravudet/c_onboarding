@@ -21,6 +21,9 @@
     <ClCompile Include="strs.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="errors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
