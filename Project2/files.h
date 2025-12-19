@@ -1,12 +1,11 @@
-/*#ifndef FILES_H
-#define FILES_H
+#pragma once
 
 #include <errno.h>
 #include <stdarg.h>
-#include <stdbool.h>
+////#include <stdbool.h>
 #include <stdio.h>
 
-#include "directories.h"
+/*#include "directories.h"*/
 #include "errors.h"
 
 enum ravudetfopenError
@@ -48,7 +47,7 @@ enum ravudetfprintfError
 };
 enum ravudetfprintfError ravudetfprintf(FILE* stream, int* bytesWritten, const char* format, ...);
 
-enum ravudetfcloseError
+/*enum ravudetfcloseError
 {
 	ravudetfcloseError_BUG = 1,
 	ravudetfcloseError_EAGAIN,
@@ -135,6 +134,4 @@ enum writeToFilePathError
 	writeToFilePathError_CLOSE_ENXIO,
 	writeToFilePathError_EMLINK,
 };
-enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[]);
-
-#endif*/
+enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[]);*/
