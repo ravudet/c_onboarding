@@ -47,7 +47,7 @@ enum ravudetfprintfError
 };
 enum ravudetfprintfError ravudetfprintf(FILE* stream, int* bytesWritten, const char* format, ...);
 
-/*enum ravudetfcloseError
+enum ravudetfcloseError
 {
 	ravudetfcloseError_BUG = 1,
 	ravudetfcloseError_EAGAIN,
@@ -99,7 +99,7 @@ enum writeToFileError
 };
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[]);
 
-enum writeToFilePathError
+/*enum writeToFilePathError
 {
 	writeToFilePathError_BUG = 1,
 	writeToFilePathError_EACCES,

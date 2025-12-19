@@ -132,7 +132,7 @@ enum ravudetfprintfError ravudetfprintf(FILE* stream, int* bytesWritten, const c
 	return returnValue;
 }
 
-/*enum ravudetfcloseError ravudetfclose(FILE* stream)
+enum ravudetfcloseError ravudetfclose(FILE* stream)
 {
 	enum ravudetfcloseError returnValue = SUCCESS;
 
@@ -335,7 +335,7 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	return returnValue;
 }
 
-enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[])
+/*enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[])
 {
 	enum writeToFilePathError returnValue = SUCCESS;
 	int error;
