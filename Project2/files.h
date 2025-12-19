@@ -2,10 +2,10 @@
 
 #include <errno.h>
 #include <stdarg.h>
-////#include <stdbool.h>
+#include <stdbool.h>
 #include <stdio.h>
 
-/*#include "directories.h"*/
+#include "directories.h"
 #include "errors.h"
 
 enum ravudetfopenError
@@ -99,7 +99,7 @@ enum writeToFileError
 };
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[]);
 
-/*enum writeToFilePathError
+enum writeToFilePathError
 {
 	writeToFilePathError_BUG = 1,
 	writeToFilePathError_EACCES,
@@ -134,4 +134,4 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	writeToFilePathError_CLOSE_ENXIO,
 	writeToFilePathError_EMLINK,
 };
-enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[]);*/
+enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[]);

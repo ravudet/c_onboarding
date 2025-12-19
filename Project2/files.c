@@ -335,7 +335,7 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	return returnValue;
 }
 
-/*enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[])
+enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[])
 {
 	enum writeToFilePathError returnValue = SUCCESS;
 	int error;
@@ -491,4 +491,4 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 
 	finally:
 	return returnValue;
-}*/
+}
