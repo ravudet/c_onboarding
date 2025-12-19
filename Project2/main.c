@@ -2,6 +2,8 @@
 
 #define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
+// https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
+
 //// TODO this requires c11; are you ok with that?
 //// TODO this doesn't actually check for other pointer types? 
 #define LENGTH(array) _Generic((array), \
@@ -46,6 +48,7 @@ enum mainError
 enum mainError main()
 {
 	//// TODO separate into a few files
+	//// TODO put array length macro in its own file
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
