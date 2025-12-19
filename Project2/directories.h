@@ -1,20 +1,20 @@
 #pragma once
 
-/*#include <stdlib.h>
+////#include <stdlib.h>
 #include <errno.h>
 
-#if defined _WIN32
+/*#if defined _WIN32
 #include <direct.h>
 #elif defined __linux__
 #include <sys/stat.h>
-#endif
+#endif*/
 
 #include "errors.h"
-#include "strs.h"*/
+#include "strs.h"
 
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength);
 
-/*enum ravudetmkdirError
+enum ravudetmkdirError
 {
 	ravudetmkdirError_BUG = 1,
 	ravudetmkdirError_NULLPOINTER,
@@ -46,7 +46,7 @@ enum mksubdirError
 };
 enum mksubdirError mksubdir(const char path[], const int endIndex);
 
-enum mkdirectorytraversalError
+/*enum mkdirectorytraversalError
 {
 	mkdirectorytraversalError_BUG = 1,
 	mkdirectorytraversalError_EACCES,

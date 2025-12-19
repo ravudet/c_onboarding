@@ -10,12 +10,12 @@ enum substringError substring(const char string[], const int endIndex, char* sub
 		int error = errno;
 		switch (error)
 		{
-		case ENOMEM:
-			returnValue = substringError_ENOMEM;
-			break;
-		default:
-			returnValue = substringError_BUG;
-			break;
+			case ENOMEM:
+				returnValue = substringError_ENOMEM;
+				break;
+			default:
+				returnValue = substringError_BUG;
+				break;
 		}
 
 		goto catch;
