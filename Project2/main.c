@@ -3,9 +3,8 @@
 int main()
 {
 	char foo[] = "c:\\foo\\bar";
-	getParentDirectory(foo, 9, "\\", 2);
-
-	mksubdir(foo, 7);
+	
+	mkdirectorytraversal(foo, 11);
 
 	return 0;
 }

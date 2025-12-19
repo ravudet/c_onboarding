@@ -46,7 +46,7 @@ enum mksubdirError
 };
 enum mksubdirError mksubdir(const char path[], const int endIndex);
 
-/*enum mkdirectorytraversalError
+enum mkdirectorytraversalError
 {
 	mkdirectorytraversalError_BUG = 1,
 	mkdirectorytraversalError_EACCES,
@@ -58,4 +58,4 @@ enum mksubdirError mksubdir(const char path[], const int endIndex);
 	mkdirectorytraversalError_EROFS,
 	mkdirectorytraversalError_ENOMEM,
 };
-enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength);*/
+enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength);

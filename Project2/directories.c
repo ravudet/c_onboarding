@@ -138,7 +138,7 @@ enum mksubdirError mksubdir(const char path[], const int endIndex)
 	return returnValue;
 }
 
-/*enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength)
+enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength)
 {
 	const char delimiter[] = "\\";
 
@@ -202,4 +202,4 @@ enum mksubdirError mksubdir(const char path[], const int endIndex)
 
 	finally:
 	return returnValue;
-}*/
+}
