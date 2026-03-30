@@ -1,12 +1,6 @@
 #pragma once
 
-#include <errno.h>
-#include <stdarg.h>
-#include <stdbool.h>
 #include <stdio.h>
-
-#include "directories.h"
-#include "errors.h"
 
 enum ravudetfopenError
 {

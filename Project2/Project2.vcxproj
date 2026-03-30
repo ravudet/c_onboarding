@@ -136,6 +136,7 @@
     <ClInclude Include="errors.h" />
     <ClInclude Include="errors_private.h" />
     <ClInclude Include="files.h" />
+    <ClInclude Include="files_private.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="main_private.h" />
     <ClInclude Include="strs.h" />

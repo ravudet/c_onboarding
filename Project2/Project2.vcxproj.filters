@@ -59,5 +59,6 @@
     <ClInclude Include="strs_private.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="files_private.h" />
   </ItemGroup>
 </Project>

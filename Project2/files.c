@@ -1,4 +1,4 @@
-#include "files.h"
+#include "files_private.h"
 
 enum ravudetfopenError ravudetfopen(const char filePath[], const char* mode, const FILE** fileHandle)
 {
