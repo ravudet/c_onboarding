@@ -1,4 +1,4 @@
-#include "strs.h"
+#include "strs_private.h"
 
 enum substringError substring(const char string[], const int endIndex, char* substringPointer[])
 {

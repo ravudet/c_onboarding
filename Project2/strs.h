@@ -1,10 +1,6 @@
 #pragma once
 
 #include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "errors.h"
 
 enum substringError
 {
