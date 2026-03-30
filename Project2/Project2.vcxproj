@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="directories.h" />
+    <ClInclude Include="directories_private.h" />
     <ClInclude Include="errors.h" />
     <ClInclude Include="files.h" />
     <ClInclude Include="main.h" />

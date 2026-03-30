@@ -1,4 +1,4 @@
-#include "directories.h"
+#include "directories_private.h"
 
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength)
 {

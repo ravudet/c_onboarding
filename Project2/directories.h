@@ -1,10 +1,5 @@
 #pragma once
 
-#include <errno.h>
-
-#include "errors.h"
-#include "strs.h"
-
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength);
 
 enum ravudetmkdirError
