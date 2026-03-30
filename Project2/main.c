@@ -48,7 +48,7 @@ enum mainError
 enum mainError main()
 {
 //// TODO combine branch
-	//// TODO separate headers into public api and private includes
+	//// TODO separate headers into public api and private includes //// TODO make sure you don't have anything extra in the public ones, then make sure you don't have anything extra in the private ones
 	//// TODO put array length macro in its own file (a private include header)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
