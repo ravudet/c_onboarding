@@ -51,7 +51,6 @@ enum mainError main()
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
-	//// TODO should your header files contain all of the includes?
 
 	enum mainError returnValue = SUCCESS;
 	int error;
