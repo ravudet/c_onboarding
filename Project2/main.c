@@ -6,9 +6,10 @@
 
 //// TODO this requires c11; are you ok with that?
 //// TODO this doesn't actually check for other pointer types? 
-#define LENGTH(array) _Generic((array), \
-	char[]: ARRAY_LENGTH(array) \
-)(array)
+//// TODO handle unsupported types: https://iifx.dev/en/articles/460125220/generic-macro-hacking-achieving-type-safety-and-custom-error-messages-in-c
+#define LENGTH(array) _Generic(array, \
+	char[]: 5 \
+)
 
 enum mainError
 {
@@ -57,6 +58,11 @@ enum mainError main()
 
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
 	error = writeToFilePath(path, ARRAY_LENGTH(path), "contents");
+
+
+	int other[] = { 1, 2 };
+	int stringLength = strlen(path);
+	int length = LENGTH(path);
 	if (error != SUCCESS)
 	{
 		switch (error)
