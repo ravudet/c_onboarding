@@ -11,6 +11,10 @@
 	char[]: 5 \
 )
 
+#define LENGTH2(array) _Generic(array, \
+	char: array + 5 \
+)
+
 enum mainError
 {
 	mainError_BUG = 1,
@@ -46,12 +50,74 @@ enum mainError
 	mainError_CLOSE_ENXIO,
 };
 
+
+
+
+
+
+// GCC/Clang extension for type comparison
+#define IS_INCOMPLETE_ARRAY(expr) \
+    __builtin_types_compatible_p(__typeof__(expr), __typeof__(*(int(*)[])0))
+
+// Generic macro to handle different cases
+#define HANDLE_ARRAY(expr) \
+    _Generic((expr), \
+        int[]: handle_incomplete_int_array, \
+        int *: handle_int_pointer, \
+        default: handle_other \
+    )(expr)
+
+// Handlers
+void handle_incomplete_int_array(int arr[]) {
+	printf("Got an incomplete int array parameter.\n");
+}
+
+void handle_int_pointer(int* p) {
+	printf("Got an int pointer.\n");
+}
+
+void handle_other(void* p) {
+	printf("Got something else.\n");
+}
+
+
+
+
+
 enum mainError main()
 {
 	//// TODO put array length macro in its own file (a private include header)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
+
+
+
+
+
+	int arr1[] = { 1, 2, 3 };   // complete array
+	int* ptr = arr1;          // pointer
+	extern int arr2[];        // incomplete array declaration
+
+	HANDLE_ARRAY(ptr);   // Matches int*
+	HANDLE_ARRAY(arr1);  // Matches int[] (decays to pointer in most contexts)
+
+	// Detect incomplete array type (compile-time check)
+	if (IS_INCOMPLETE_ARRAY(arr2)) {
+		printf("arr2 is incomplete array type.\n");
+	}
+	else {
+		printf("arr2 is not incomplete array type.\n");
+	}
+
+
+
+
+
+
+
+
+
 
 	enum mainError returnValue = SUCCESS;
 	int error;
@@ -62,7 +128,10 @@ enum mainError main()
 
 	int other[] = { 1, 2 };
 	int stringLength = strlen(path);
-	int length = LENGTH(path);
+	////int length = LENGTH(path);
+
+	char something = 'a';
+	////int value = LENGTH2(something);
 	if (error != SUCCESS)
 	{
 		switch (error)
