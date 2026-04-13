@@ -41,6 +41,21 @@
 
 
 
+// http://www.individual.utoronto.ca/dfr/hmmmm/2020/07/26/1.html
+
+
+#define EMPTY()
+#define DEFER(m) m EMPTY()
+#define EVAL(m) m
+
+#define FOR_EACH_() FOR_EACH
+
+#define PRINT_DOUBLE(b, a) printf(#a #b "\n");
+#define PRINT_DOUBLE_HELPER(a) DEFER(FOR_EACH_)()(PRINT_DOUBLE, a)
+
+
+
+
 enum mainError
 {
 	mainError_BUG = 1,
@@ -86,6 +101,11 @@ enum mainError
 
 enum mainError main()
 {
+
+	EVAL(FOR_EACH(PRINT_DOUBLE_HELPER))
+
+
+
 	//// TODO put array length macro in its own file (a private include header)
 	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
