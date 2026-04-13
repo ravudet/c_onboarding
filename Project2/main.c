@@ -25,12 +25,19 @@
 
 
 
+// https://sgf4.github.io/posts/foreach-macro/
+// https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/recommendations/preprocessor-pre/pre10-c/
+
+#define DO_THING printf("Shake it, Baby\n")
+#define DO_THING_2 DO_THING; DO_THING
+#define DO_THING_4 DO_THING_2; DO_THING_2
+#define DO_THING_8 DO_THING_4; DO_THING_4
+#define DO_THING_16 DO_THING_8; DO_THING_8
 
 
-
-
-
-
+#define DO_THING_N(N, array) \
+	if(((N)&1)==0){char[0]: ARRAY_LENGTH(array)}\
+    if(((N)&1)!=0){char[N]: ARRAY_LENGTH(array), DO_THING_N(N - 1, array)} // this leverages the compiler optimizing away dead code...
 
 
 
