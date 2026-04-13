@@ -4,6 +4,18 @@
 
 #define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
+
+
+
+#define LOOP1(a) char[1]: ARRAY_LENGTH(array),
+#define LOOP2(a) char[2]: ARRAY_LENGTH(array), LOOP1()
+#define LOOP3(a) char[3]: ARRAY_LENGTH(array), LOOP2()
+
+//#define LOOPN(n) LOOP##n
+
+
+
+
 //// TODO this requires c11; are you ok with that?
 //// TODO this doesn't actually check for other pointer types? 
 //// TODO handle unsupported types: https://iifx.dev/en/articles/460125220/generic-macro-hacking-achieving-type-safety-and-custom-error-messages-in-c
@@ -16,11 +28,7 @@
 
 
 
-#define LOOP1(a) a
-#define LOOP2(a) a LOOP1(a)
-#define LOOP3(a) a LOOP2(a)
 
-#define LOOPN(n,a) LOOP##n(a)
 
 
 
