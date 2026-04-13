@@ -8,12 +8,9 @@
 //// TODO this doesn't actually check for other pointer types? 
 //// TODO handle unsupported types: https://iifx.dev/en/articles/460125220/generic-macro-hacking-achieving-type-safety-and-custom-error-messages-in-c
 #define LENGTH(array) _Generic(array, \
-	char[]: 5 \
+	char[35]: ARRAY_LENGTH(array) \
 )
 
-#define LENGTH2(array) _Generic(array, \
-	char: array + 5 \
-)
 
 enum mainError
 {
@@ -91,47 +88,11 @@ enum mainError main()
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
 
-
-
-
-
-	int arr1[] = { 1, 2, 3 };   // complete array
-	int* ptr = arr1;          // pointer
-	extern int arr2[];        // incomplete array declaration
-
-	HANDLE_ARRAY(ptr);   // Matches int*
-	HANDLE_ARRAY(arr1);  // Matches int[] (decays to pointer in most contexts)
-
-	// Detect incomplete array type (compile-time check)
-	if (IS_INCOMPLETE_ARRAY(arr2)) {
-		printf("arr2 is incomplete array type.\n");
-	}
-	else {
-		printf("arr2 is not incomplete array type.\n");
-	}
-
-
-
-
-
-
-
-
-
-
 	enum mainError returnValue = SUCCESS;
 	int error;
 
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
-	error = writeToFilePath(path, ARRAY_LENGTH(path), "contents");
-
-
-	int other[] = { 1, 2 };
-	int stringLength = strlen(path);
-	////int length = LENGTH(path);
-
-	char something = 'a';
-	////int value = LENGTH2(something);
+	error = writeToFilePath(path, LENGTH(path), "contents");
 	if (error != SUCCESS)
 	{
 		switch (error)
