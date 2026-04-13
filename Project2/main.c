@@ -12,6 +12,20 @@
 )
 
 
+
+
+
+
+#define LOOP1(a) a
+#define LOOP2(a) a LOOP1(a)
+#define LOOP3(a) a LOOP2(a)
+
+#define LOOPN(n,a) LOOP##n(a)
+
+
+
+
+
 enum mainError
 {
 	mainError_BUG = 1,
@@ -52,38 +66,13 @@ enum mainError
 
 
 
-// GCC/Clang extension for type comparison
-#define IS_INCOMPLETE_ARRAY(expr) \
-    __builtin_types_compatible_p(__typeof__(expr), __typeof__(*(int(*)[])0))
-
-// Generic macro to handle different cases
-#define HANDLE_ARRAY(expr) \
-    _Generic((expr), \
-        int[]: handle_incomplete_int_array, \
-        int *: handle_int_pointer, \
-        default: handle_other \
-    )(expr)
-
-// Handlers
-void handle_incomplete_int_array(int arr[]) {
-	printf("Got an incomplete int array parameter.\n");
-}
-
-void handle_int_pointer(int* p) {
-	printf("Got an int pointer.\n");
-}
-
-void handle_other(void* p) {
-	printf("Got something else.\n");
-}
-
-
 
 
 
 enum mainError main()
 {
 	//// TODO put array length macro in its own file (a private include header)
+	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
 	//// TODO go through TODOs
