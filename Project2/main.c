@@ -56,6 +56,59 @@
 
 
 
+
+
+
+
+
+// http://jhnet.co.uk/articles/cpp_magic
+
+//// TODO this one seems like it might work eventually; you are at `#define DEFER1(m) m EMPTY()`
+
+
+
+
+
+#define CAT(a,b) a ## b
+
+
+
+#define SECOND(a, b, ...) b
+#define IS_PROBE(...) SECOND(__VA_ARGS__, 0)
+#define PROBE() ~, 1
+#define NOT(x) IS_PROBE(CAT(_NOT_, x))
+#define _NOT_0 PROBE()
+#define BOOL(x) NOT(NOT(x))
+
+
+
+
+
+#define IF_ELSE(condition) _IF_ELSE(BOOL(condition))
+#define _IF_ELSE(condition) CAT(_IF_, condition)
+
+#define _IF_1(...) __VA_ARGS__ _IF_1_ELSE
+#define _IF_0(...)             _IF_0_ELSE
+
+#define _IF_1_ELSE(...)
+#define _IF_0_ELSE(...) __VA_ARGS__
+
+
+
+
+#define EMPTY()
+#define A(n) I like the number n
+
+
+
+
+#define EVAL1(...) __VA_ARGS__
+
+
+
+
+
+
 enum mainError
 {
 	mainError_BUG = 1,
@@ -97,10 +150,24 @@ enum mainError
 
 
 
+int first()
+{
+	return 0;
+}
+
+int second()
+{
+	return 0;
+}
 
 
 enum mainError main()
 {
+
+	IF_ELSE(123)(first)(second);
+	EVAL1(A EMPTY() (123))
+
+
 
 	EVAL(FOR_EACH(PRINT_DOUBLE_HELPER))
 
