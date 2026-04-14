@@ -201,6 +201,7 @@ enum mainError main()
 {
 	////THE_PATTERN(4);
 
+	//// TODO not working correctly...
 	EVAL(MAP(GREET, NATURALS(7)))
 
 
