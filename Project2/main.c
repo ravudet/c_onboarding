@@ -129,7 +129,7 @@
 
 
 
-/*#define NATURALS_0 0
+#define NATURALS_0 0
 #define NATURALS_1 1, NATURALS_0
 #define NATURALS_2 2, NATURALS_1
 #define NATURALS_3 3, NATURALS_2
@@ -137,10 +137,13 @@
 #define NATURALS_5 5, NATURALS_4
 #define NATURALS_6 6, NATURALS_5
 #define NATURALS_7 7, NATURALS_6
+#define NATURALS_8 8, NATURALS_7
+#define NATURALS_9 9, NATURALS_8
+#define NATURALS(n) NATURALS_##n
 
 
 
-#define _THE_PATTERN(n) char[n]: ARRAY_LENGTH(array) 
+/*#define _THE_PATTERN(n) char[n]: ARRAY_LENGTH(array) 
 #define THE_PATTERN(n) IF_ELSE(n)(_THE_PATTERN(n), )()*/
 
 //#define PATTERNS(n) \
@@ -198,7 +201,7 @@ enum mainError main()
 {
 	////THE_PATTERN(4);
 
-	EVAL(MAP(GREET, Mum, Dad, Adam, Joe))
+	EVAL(MAP(GREET, NATURALS(7)))
 
 
 
