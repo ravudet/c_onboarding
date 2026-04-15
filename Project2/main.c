@@ -16,6 +16,7 @@
 
 
 
+//// TODO you had legacy msvc before
 //// TODO this requires c11; are you ok with that?
 //// TODO this doesn't actually check for other pointer types? 
 //// TODO handle unsupported types: https://iifx.dev/en/articles/460125220/generic-macro-hacking-achieving-type-safety-and-custom-error-messages-in-c
