@@ -4,124 +4,6 @@
 
 #define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
-
-
-
-#define LOOP1(a) char[1]: ARRAY_LENGTH(array),
-#define LOOP2(a) char[2]: ARRAY_LENGTH(array), LOOP1()
-#define LOOP3(a) char[3]: ARRAY_LENGTH(array), LOOP2()
-
-//#define LOOPN(n) LOOP##n
-
-
-
-
-//// TODO you had legacy msvc before
-//// TODO this requires c11; are you ok with that?
-//// TODO this doesn't actually check for other pointer types? 
-//// TODO handle unsupported types: https://iifx.dev/en/articles/460125220/generic-macro-hacking-achieving-type-safety-and-custom-error-messages-in-c
-#define LENGTH(array) _Generic(array, \
-	char[35]: ARRAY_LENGTH(array) \
-)
-
-
-
-// https://sgf4.github.io/posts/foreach-macro/
-// https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/recommendations/preprocessor-pre/pre10-c/
-
-#define DO_THING printf("Shake it, Baby\n")
-#define DO_THING_2 DO_THING; DO_THING
-#define DO_THING_4 DO_THING_2; DO_THING_2
-#define DO_THING_8 DO_THING_4; DO_THING_4
-#define DO_THING_16 DO_THING_8; DO_THING_8
-
-
-#define DO_THING_N(N, array) \
-	if(((N)&1)==0){char[0]: ARRAY_LENGTH(array)}\
-    if(((N)&1)!=0){char[N]: ARRAY_LENGTH(array), DO_THING_N(N - 1, array)} // this leverages the compiler optimizing away dead code...
-
-
-
-// http://www.individual.utoronto.ca/dfr/hmmmm/2020/07/26/1.html
-
-
-#define EMPTY()
-#define DEFER(m) m EMPTY()
-#define EVAL(m) m
-
-#define FOR_EACH_() FOR_EACH
-
-#define PRINT_DOUBLE(b, a) printf(#a #b "\n");
-#define PRINT_DOUBLE_HELPER(a) DEFER(FOR_EACH_)()(PRINT_DOUBLE, a)
-
-
-
-
-
-
-
-
-
-// http://jhnet.co.uk/articles/cpp_magic
-
-//// TODO this one seems like it might work eventually; you are at `#define DEFER1(m) m EMPTY()`
-
-
-#define SECOND(a, b, ...) b
-
-#define IS_PROBE(...) SECOND(__VA_ARGS__, 0)
-#define PROBE() ~, 1
-
-#define CAT(a,b) a ## b
-
-#define NOT(x) IS_PROBE(CAT(_NOT_, x))
-#define _NOT_0 PROBE()
-
-#define BOOL(x) NOT(NOT(x))
-
-#define IF_ELSE(condition) _IF_ELSE(BOOL(condition))
-#define _IF_ELSE(condition) CAT(_IF_, condition)
-
-#define _IF_1(...) __VA_ARGS__ _IF_1_ELSE
-#define _IF_0(...)             _IF_0_ELSE
-
-#define _IF_1_ELSE(...)
-#define _IF_0_ELSE(...) __VA_ARGS__
-
-
-
-
-
-
-
-
-#define NATURALS_0 0
-#define NATURALS_1 1, NATURALS_0
-#define NATURALS_2 2, NATURALS_1
-#define NATURALS_3 3, NATURALS_2
-#define NATURALS_4 4, NATURALS_3
-#define NATURALS_5 5, NATURALS_4
-#define NATURALS_6 6, NATURALS_5
-#define NATURALS_7 7, NATURALS_6
-#define NATURALS_8 8, NATURALS_7
-#define NATURALS_9 9, NATURALS_8
-#define NATURALS(n) NATURALS_##n
-
-
-
-/*#define _THE_PATTERN(n) char[n]: ARRAY_LENGTH(array) 
-#define THE_PATTERN(n) IF_ELSE(n)(_THE_PATTERN(n), )()*/
-
-//#define PATTERNS(n) \
-//	IF_ELSE(n)
-
-//#define _PATTERNS() PATTERNS
-
-
-
-
-
-
 enum mainError
 {
 	mainError_BUG = 1,
@@ -157,39 +39,9 @@ enum mainError
 	mainError_CLOSE_ENXIO,
 };
 
-
-
-
-
-
-
 enum mainError main()
 {
-	////THE_PATTERN(4);
-
-	IF_ELSE(0)(main)(main)();
-	//IF_ELSE(1)(it was non - zero)(it was zero)
-	//IF_ELSE(123)(it was non - zero)(it was zero)
-
-
-
-	/*char path2[] = "c:\\users\\ravud\\test\\test2\\test.tx";
-	if (0)
-	{
-		int length = LENGTH(path2);
-	}
-	else
-	{
-		int length = LENGTH(path2);
-	}*/
-
-	//EVAL1(A EMPTY() (123))
-
-
-	//EVAL(FOR_EACH(PRINT_DOUBLE_HELPER))
-
-
-
+	
 	//// TODO put array length macro in its own file (a private include header)
 	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
