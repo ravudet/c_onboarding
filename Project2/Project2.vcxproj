@@ -124,24 +124,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="directories.c" />
-    <ClCompile Include="errors.c" />
-    <ClCompile Include="files.c" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="strs.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="arraylength.h" />
     <ClInclude Include="directories.h" />
-    <ClInclude Include="directories_private.h" />
     <ClInclude Include="errors.h" />
-    <ClInclude Include="errors_private.h" />
     <ClInclude Include="files.h" />
-    <ClInclude Include="files_private.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="main_private.h" />
     <ClInclude Include="strs.h" />
-    <ClInclude Include="strs_private.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
