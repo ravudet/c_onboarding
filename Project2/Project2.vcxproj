@@ -131,6 +131,7 @@
     <ClCompile Include="strs.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arraylength.h" />
     <ClInclude Include="directories.h" />
     <ClInclude Include="directories_private.h" />
     <ClInclude Include="errors.h" />

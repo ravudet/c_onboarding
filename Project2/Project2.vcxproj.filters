@@ -62,5 +62,8 @@
     <ClInclude Include="files_private.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="arraylength.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

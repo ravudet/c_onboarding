@@ -2,8 +2,6 @@
 
 // https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
 
-#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
-
 enum mainError
 {
 	mainError_BUG = 1,
@@ -42,7 +40,7 @@ enum mainError
 enum mainError main()
 {
 	
-	//// TODO put array length macro in its own file (a private include header)
+	//// TODO is there anything that actually makes the private headers private?
 	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
@@ -52,7 +50,7 @@ enum mainError main()
 	int error;
 
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
-	error = writeToFilePath(path, LENGTH(path), "contents");
+	error = writeToFilePath(path, ARRAY_LENGTH(path), "contents");
 	if (error != SUCCESS)
 	{
 		switch (error)
