@@ -39,7 +39,8 @@ enum mainError
 
 enum mainError main()
 {
-	
+	//// TODO get the shared libraries working (add this to your "new languages" TODO)
+	//// TODO add a private header for arraylength
 	//// TODO is there anything that actually makes the private headers private?
 	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
