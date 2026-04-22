@@ -124,15 +124,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="directories.h" />
-    <ClInclude Include="errors.h" />
-    <ClInclude Include="files.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="main_private.h" />
-    <ClInclude Include="strs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project3\Project3.vcxproj">
+      <Project>{8399d804-70f3-4294-ac1f-df23f10c76c1}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

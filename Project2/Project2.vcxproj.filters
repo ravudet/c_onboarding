@@ -13,28 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="shared">
-      <UniqueIdentifier>{66acca6c-4192-4d94-9c08-52f9fce4f74b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_private.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="directories.h">
-      <Filter>shared</Filter>
-    </ClInclude>
-    <ClInclude Include="files.h">
-      <Filter>shared</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>shared</Filter>
-    </ClInclude>
-    <ClInclude Include="strs.h">
-      <Filter>shared</Filter>
-    </ClInclude>
-    <ClInclude Include="errors.h">
-      <Filter>shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
