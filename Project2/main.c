@@ -39,7 +39,7 @@ enum mainError
 
 enum mainError main()
 {
-	//// TODO get the shared libraries working (add this to your "new languages" TODO)
+	//// TODO get the shared libraries working
 	//// TODO add a private header for arraylength
 	//// TODO is there anything that actually makes the private headers private?
 	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
