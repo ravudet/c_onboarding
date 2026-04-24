@@ -52,7 +52,7 @@ enum mainError main()
 	int error;
 
 	char path[] = "c:\\users\\ravud\\test\\test2\\test.txt";
-	error = writeToFilePath(path, ARRAY_LENGTH(path), "contents");
+	error = writeToFilePath(path, ARRAY_LENGTH(path), "contents"); //// TODO this is currently appending, is that the desired behavior?
 	if (error != SUCCESS)
 	{
 		switch (error)
