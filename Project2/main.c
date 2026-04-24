@@ -40,8 +40,9 @@ enum mainError
 enum mainError main()
 {
 	//// TODO get the shared libraries working
-	//// TODO add a private header for arraylength
 	//// TODO is there anything that actually makes the private headers private?
+	//// TODO https://learn.microsoft.com/en-us/cpp/build/adding-references-in-visual-cpp-projects?view=msvc-170
+	//// TODO add a private header for arraylength
 	//// TODO make sure you still have the spacing correct in this file (compare it to your other files)
 	//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
 	//// TODO write a unit test to confirm that the file was written
