@@ -15,46 +15,46 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Project2\directories.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project2\errors.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project2\files.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Project2\strs.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="arraylength.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="directories.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="directories_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="errors_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="strs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="strs_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Project2\arraylength.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\directories.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\errors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\files.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\strs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\directories_private.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\errors_private.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\files_private.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Project2\strs_private.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="directories.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="errors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="files.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="strs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

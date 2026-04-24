@@ -19,21 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Project2\directories.c" />
-    <ClCompile Include="..\Project2\errors.c" />
-    <ClCompile Include="..\Project2\files.c" />
-    <ClCompile Include="..\Project2\strs.c" />
+    <ClInclude Include="arraylength.h" />
+    <ClInclude Include="directories.h" />
+    <ClInclude Include="directories_private.h" />
+    <ClInclude Include="errors.h" />
+    <ClInclude Include="errors_private.h" />
+    <ClInclude Include="files.h" />
+    <ClInclude Include="files_private.h" />
+    <ClInclude Include="strs.h" />
+    <ClInclude Include="strs_private.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Project2\arraylength.h" />
-    <ClInclude Include="..\Project2\directories.h" />
-    <ClInclude Include="..\Project2\directories_private.h" />
-    <ClInclude Include="..\Project2\errors.h" />
-    <ClInclude Include="..\Project2\errors_private.h" />
-    <ClInclude Include="..\Project2\files.h" />
-    <ClInclude Include="..\Project2\files_private.h" />
-    <ClInclude Include="..\Project2\strs.h" />
-    <ClInclude Include="..\Project2\strs_private.h" />
+    <ClCompile Include="directories.c" />
+    <ClCompile Include="errors.c" />
+    <ClCompile Include="files.c" />
+    <ClCompile Include="strs.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
