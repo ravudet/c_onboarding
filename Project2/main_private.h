@@ -2,6 +2,6 @@
 
 #include "main.h"
 
-#include "arraylength.h"
-#include "errors.h"
-#include "files.h"
+#include "..\Project3\arraylength.h"
+#include "..\Project3\errors.h"
+#include "..\Project3\files.h"
