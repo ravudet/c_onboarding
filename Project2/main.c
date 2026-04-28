@@ -1,7 +1,5 @@
 #include "main_private.h"
 
-// https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
-
 enum mainError
 {
 	mainError_BUG = 1,
