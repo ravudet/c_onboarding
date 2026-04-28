@@ -243,7 +243,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 		default:
 			returnValue = writeToFileError_BUG;
 			break;
-
 		}
 
 		goto finally;

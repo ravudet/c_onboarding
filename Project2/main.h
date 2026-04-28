@@ -34,5 +34,4 @@ enum mainError
 	mainError_CLOSE_EPIPE,
 	mainError_CLOSE_ENXIO,
 };
-
 enum mainError main();
