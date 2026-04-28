@@ -47,3 +47,7 @@ int main()
 	return 0; 
 }
 ```
+
+### documentation
+
+https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
