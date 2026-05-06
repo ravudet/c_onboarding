@@ -1,7 +1,7 @@
 #include "main_private.h"
 
 //// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
-////	you have files.c left; you are at `writetofile`
+////	you have files.c left; you are at `writetofilepath`
 //// TODO write a unit test to confirm that the file was written
 //// TODO do you have binary and build files in the repo?
 //// TODO go through TODOs

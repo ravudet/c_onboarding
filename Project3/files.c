@@ -231,9 +231,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 		case ravudetfopenError_EROFS:
 			returnValue = writeToFileError_EROFS;
 			break;
-		case ravudetfopenError_EINVAL:
-			returnValue = writeToFileError_EINVAL;
-			break;
 		case ravudetfopenError_ENOMEM:
 			returnValue = writeToFileError_ENOMEM;
 			break;
@@ -305,12 +302,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 			break;
 		case ravudetfcloseError_EINTR:
 			returnValue = writeToFileError_CLOSE_EINTR;
-			break;
-		case ravudetfcloseError_EIO:
-			returnValue = writeToFileError_CLOSE_EIO;
-			break;
-		case ravudetfcloseError_ENOMEM:
-			returnValue = writeToFileError_CLOSE_ENOMEM;
 			break;
 		case ravudetfcloseError_ENOSPC:
 			returnValue = writeToFileError_CLOSE_ENOSPC;
