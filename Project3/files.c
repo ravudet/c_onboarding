@@ -414,9 +414,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 			case writeToFileError_EROFS:
 				returnValue = writeToFilePathError_EROFS;
 				break;
-			case writeToFileError_EINVAL:
-				returnValue = writeToFilePathError_EINVAL;
-				break;
 			case writeToFileError_ENOMEM:
 				returnValue = writeToFilePathError_ENOMEM;
 				break;
@@ -452,12 +449,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 				break;
 			case writeToFileError_CLOSE_EINTR:
 				returnValue = writeToFilePathError_CLOSE_EINTR;
-				break;
-			case writeToFileError_CLOSE_EIO:
-				returnValue = writeToFilePathError_CLOSE_EIO;
-				break;
-			case writeToFileError_CLOSE_ENOMEM:
-				returnValue = writeToFilePathError_CLOSE_ENOMEM;
 				break;
 			case writeToFileError_CLOSE_ENOSPC:
 				returnValue = writeToFilePathError_CLOSE_ENOSPC;
