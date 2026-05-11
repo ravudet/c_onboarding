@@ -305,7 +305,7 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 			break;
 		}
 
-		//// TODO what can my caller do if there's a failure to close the file?
+		//// TODO what can my caller do if there's a failure to close the file? //// TODO these failures are actually because of the buffer flushing...
 		goto finally;
 	}
 
