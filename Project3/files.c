@@ -251,9 +251,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	{
 		switch (error)
 		{
-		case ravudetfprintfError_EAGAIN:
-			returnValue = writeToFileError_EAGAIN;
-			break;
 		case ravudetfprintfError_EFBIG:
 			returnValue = writeToFileError_EFBIG;
 			break;
@@ -294,9 +291,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 	{
 		switch (error)
 		{
-		case ravudetfcloseError_EAGAIN:
-			returnValue = writeToFileError_CLOSE_EAGAIN;
-			break;
 		case ravudetfcloseError_EFBIG:
 			returnValue = writeToFileError_CLOSE_EFBIG;
 			break;
@@ -420,9 +414,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 			case writeToFileError_ETXTBSY:
 				returnValue = writeToFilePathError_ETXTBSY;
 				break;
-			case writeToFileError_EAGAIN:
-				returnValue = writeToFilePathError_EAGAIN;
-				break;
 			case writeToFileError_EFBIG:
 				returnValue = writeToFilePathError_EFBIG;
 				break;
@@ -440,9 +431,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 				break;
 			case writeToFileError_PRINT_EOVERFLOW:
 				returnValue = writeToFilePathError_PRINT_EOVERFLOW;
-				break;
-			case writeToFileError_CLOSE_EAGAIN:
-				returnValue = writeToFilePathError_CLOSE_EAGAIN;
 				break;
 			case writeToFileError_CLOSE_EFBIG:
 				returnValue = writeToFilePathError_CLOSE_EFBIG;
