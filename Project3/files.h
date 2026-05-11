@@ -77,13 +77,11 @@ enum writeToFileError
 	writeToFileError_EFBIG,
 	writeToFileError_PRINT_EINTR,
 	writeToFileError_EIO,
-	writeToFileError_EPIPE,
 	writeToFileError_EILSEQ,
 	writeToFileError_PRINT_EOVERFLOW,
 	writeToFileError_CLOSE_EFBIG,
 	writeToFileError_CLOSE_EINTR,
 	writeToFileError_CLOSE_ENOSPC,
-	writeToFileError_CLOSE_EPIPE,
 	writeToFileError_CLOSE_ENXIO,
 };
 enum writeToFileError writeToFile(const char filePath[], int pathLength, const char contents[]);
@@ -108,13 +106,11 @@ enum writeToFilePathError
 	writeToFilePathError_EFBIG,
 	writeToFilePathError_PRINT_EINTR,
 	writeToFilePathError_EIO,
-	writeToFilePathError_EPIPE,
 	writeToFilePathError_EILSEQ,
 	writeToFilePathError_PRINT_EOVERFLOW,
 	writeToFilePathError_CLOSE_EFBIG,
 	writeToFilePathError_CLOSE_EINTR,
 	writeToFilePathError_CLOSE_ENOSPC,
-	writeToFilePathError_CLOSE_EPIPE,
 	writeToFilePathError_CLOSE_ENXIO,
 	writeToFilePathError_EMLINK,
 };

@@ -263,9 +263,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 		case ravudetfprintfError_ENOSPC:
 			returnValue = writeToFileError_ENOSPC;
 			break;
-		case ravudetfprintfError_EPIPE:
-			returnValue = writeToFileError_EPIPE;
-			break;
 		case ravudetfprintfError_ENOMEM:
 			returnValue = writeToFileError_ENOMEM;
 			break;
@@ -299,9 +296,6 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 			break;
 		case ravudetfcloseError_ENOSPC:
 			returnValue = writeToFileError_CLOSE_ENOSPC;
-			break;
-		case ravudetfcloseError_EPIPE:
-			returnValue = writeToFileError_CLOSE_EPIPE;
 			break;
 		case ravudetfcloseError_ENXIO:
 			returnValue = writeToFileError_CLOSE_ENXIO;
@@ -423,9 +417,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 			case writeToFileError_EIO:
 				returnValue = writeToFilePathError_EIO;
 				break;
-			case writeToFileError_EPIPE:
-				returnValue = writeToFilePathError_EPIPE;
-				break;
 			case writeToFileError_EILSEQ:
 				returnValue = writeToFilePathError_EILSEQ;
 				break;
@@ -440,9 +431,6 @@ enum writeToFilePathError writeToFilePath(const char path[], int pathLength, con
 				break;
 			case writeToFileError_CLOSE_ENOSPC:
 				returnValue = writeToFilePathError_CLOSE_ENOSPC;
-				break;
-			case writeToFileError_CLOSE_EPIPE:
-				returnValue = writeToFilePathError_CLOSE_EPIPE;
 				break;
 			case writeToFileError_CLOSE_ENXIO:
 				returnValue = writeToFilePathError_CLOSE_ENXIO;
