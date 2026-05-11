@@ -305,7 +305,9 @@ enum writeToFileError writeToFile(const char filePath[], int pathLength, const c
 			break;
 		}
 
-		//// TODO what can my caller do if there's a failure to close the file? //// TODO these failures are actually because of the buffer flushing...
+		//// TODO what can my caller do if there's a failure to close the file? //// TODO these failures are actually because of the buffer flushing, and according to the doc: https://pubs.opengroup.org/onlinepubs/9699919799/functions/fclose.html
+		//// > Whether or not the call succeeds, the stream shall be disassociated from the file and any buffer set by the setbuf() or setvbuf() function shall be disassociated from the stream.
+		//// so the file will be "closed" even if we fail
 		goto finally;
 	}
 
