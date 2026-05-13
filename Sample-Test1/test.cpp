@@ -7,15 +7,21 @@
 #include <unistd.h>
 #endif
 
+#define EXPECT_NONFATAL_FAILURE 
+
 TEST(WriteToFile, WriteToFile)
 {
 	char* workingDirectory = getcwd(NULL, 0);
 
-	std::cout << "Asdf";
+	::testing::ScopedTrace trace(__FILE__, __LINE__, "test");
 
+	SCOPED_TRACE("qwer");
+
+	std::cout << workingDirectory;
+	////throw "sadf";
 	free(workingDirectory);
 
-	//EXPECT_TRUE(false);
+	EXPECT_TRUE(false) << workingDirectory;
 }
 
 
