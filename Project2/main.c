@@ -1,7 +1,5 @@
 #include "main_private.h"
 
-//// TODO some of your error codes aren't actually possible (for example, EINVAL in the `writeToFile` can't come from `fopen`)
-////	you have files.c left; you are at `writetofilepath`, `writeToFileError_PRINT_EINTR`
 //// TODO write a unit test to confirm that the file was written
 //// TODO do you have binary and build files in the repo?
 //// TODO go through TODOs
@@ -50,17 +48,11 @@ enum mainError main()
 		case writeToFilePathError_EROFS:
 			returnValue = mainError_EROFS;
 			break;
-		case writeToFilePathError_EINVAL:
-			returnValue = mainError_EINVAL;
-			break;
 		case writeToFilePathError_ENOMEM:
 			returnValue = mainError_ENOMEM;
 			break;
 		case writeToFilePathError_ETXTBSY:
 			returnValue = mainError_ETXTBSY;
-			break;
-		case writeToFilePathError_EAGAIN:
-			returnValue = mainError_EAGAIN;
 			break;
 		case writeToFilePathError_EFBIG:
 			returnValue = mainError_EFBIG;
@@ -71,17 +63,11 @@ enum mainError main()
 		case writeToFilePathError_EIO:
 			returnValue = mainError_EIO;
 			break;
-		case writeToFilePathError_EPIPE:
-			returnValue = mainError_EPIPE;
-			break;
 		case writeToFilePathError_EILSEQ:
 			returnValue = mainError_EILSEQ;
 			break;
 		case writeToFilePathError_PRINT_EOVERFLOW:
 			returnValue = mainError_PRINT_EOVERFLOW;
-			break;
-		case writeToFilePathError_CLOSE_EAGAIN:
-			returnValue = mainError_CLOSE_EAGAIN;
 			break;
 		case writeToFilePathError_CLOSE_EFBIG:
 			returnValue = mainError_CLOSE_EFBIG;
@@ -89,17 +75,8 @@ enum mainError main()
 		case writeToFilePathError_CLOSE_EINTR:
 			returnValue = mainError_CLOSE_EINTR;
 			break;
-		case writeToFilePathError_CLOSE_EIO:
-			returnValue = mainError_CLOSE_EIO;
-			break;
-		case writeToFilePathError_CLOSE_ENOMEM:
-			returnValue = mainError_CLOSE_ENOMEM;
-			break;
 		case writeToFilePathError_CLOSE_ENOSPC:
 			returnValue = mainError_CLOSE_ENOSPC;
-			break;
-		case writeToFilePathError_CLOSE_EPIPE:
-			returnValue = mainError_CLOSE_EPIPE;
 			break;
 		case writeToFilePathError_CLOSE_ENXIO:
 			returnValue = mainError_CLOSE_ENXIO;
