@@ -1,0 +1,6 @@
+﻿  hello.cpp
+  test.cpp
+C:\github\c_onboarding\Sample-Test1\test.cpp(10,1): warning C4003: not enough arguments for function-like macro invocation 'TEST'
+  pch.cpp
+  Generating Code...
+  Sample-Test1.vcxproj -> C:\github\c_onboarding\Debug\Sample-Test1.exe

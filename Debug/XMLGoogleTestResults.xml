@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="1" failures="0" disabled="0" errors="0" timestamp="2026-05-13T14:02:00" time="0.001" name="AllTests">
+  <testsuite name="WriteToFile" tests="1" failures="0" disabled="0" errors="0" time="0">
+    <testcase name="" status="run" time="0" classname="WriteToFile">
+<properties>
+<property name="first" value="second"/>
+</properties>
+    </testcase>
+  </testsuite>
+</testsuites>
