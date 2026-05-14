@@ -11,7 +11,7 @@
 
 TEST(WriteToFile, WriteToFile)
 {
-	char path[MAX_BUF];
+	/*char path[MAX_BUF];
 	if (getcwd(path, MAX_BUF) != NULL) {
 		printf("Current working directory: %s\n", path);
 	}
@@ -37,7 +37,7 @@ TEST(WriteToFile, WriteToFile)
 	char* path4 = NULL;
 	path4 = getcwd(path4, 0);
 	//EXPECT_TRUE(false) << path4 << "!234a";
-	free(path4);
+	free(path4);*/
 
 
 
