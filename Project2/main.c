@@ -1,6 +1,7 @@
 #include "main_private.h"
 
 //// TODO write a unit test to confirm that the file was written
+//// TODO did you put `const` everywhere it's applicable?
 //// TODO do you have binary and build files in the repo?
 //// TODO go through TODOs
 

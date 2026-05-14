@@ -7,6 +7,43 @@
 #include <unistd.h>
 #endif
 
+
+
+
+
+
+enum ravudetgetcwdError
+{
+	ravudetfopenError_BUG = 1,
+	ravudetfopenError_EACCES,
+	ravudetfopenError_EINTR,
+	ravudetfopenError_EISDIR,
+	ravudetfopenError_ELOOP,
+	ravudetfopenError_EMFILE,
+	ravudetfopenError_ENAMETOOLONG,
+	ravudetfopenError_ENFILE,
+	ravudetfopenError_ENOENT,
+	ravudetfopenError_ENOSPC,
+	ravudetfopenError_ENOTDIR,
+	ravudetfopenError_ENXIO,
+	ravudetfopenError_EOVERFLOW,
+	ravudetfopenError_EROFS,
+	ravudetfopenError_EINVAL,
+	ravudetfopenError_ENOMEM,
+	ravudetfopenError_ETXTBSY,
+};
+enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd)
+{
+	//// https://www.man7.org/linux/man-pages/man3/getcwd.3.html
+	//// TODO you are here, mimicing `ravudetfopen`
+}
+
+
+
+
+
+
+
 TEST(WriteToFile, WriteToFile)
 {
 	char* workingDirectory = getcwd(NULL, 0);
