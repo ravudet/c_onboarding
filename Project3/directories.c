@@ -203,3 +203,38 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], 
 	finally:
 	return returnValue;
 }
+
+enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd)
+{
+	//// https://www.man7.org/linux/man-pages/man3/getcwd.3.html
+	//// TODO you are here, mimicing `ravudetfopen`
+
+	enum ravudetgetcwdError returnValue = SUCCESS;
+
+	cwd = getcwd(NULL, 0);
+
+	if (*cwd == NULL)
+	{
+		int error = errno;
+		switch (error)
+		{
+			//// TODO you are here
+			//// TODO evaluate which of these can actually happen in the context of this method
+		case EACCES:
+		case EFAULT:
+		case EINVAL:
+		case ENAMETOOLONG:
+		case ENOENT:
+		case ENOMEM:
+		case ERANGE:
+		default:
+			returnValue = ravudetgetcwdError_BUG;
+			break;
+		}
+
+		goto finally;
+	}
+
+	finally:
+	return returnValue;
+}

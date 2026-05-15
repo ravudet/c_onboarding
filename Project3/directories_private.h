@@ -6,6 +6,7 @@
 #include <direct.h>
 #elif defined __linux__
 #include <sys/stat.h>
+#include <unistd.h>
 #endif
 
 #include <errno.h>

@@ -47,3 +47,12 @@ enum mkdirectorytraversalError
 	mkdirectorytraversalError_ENOMEM,
 };
 enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], int pathLength);
+
+enum ravudetgetcwdError
+{
+	ravudetgetcwdError_BUG = 1,
+	ravudetgetcwdError_EACCES,
+	ravudetgetcwdError_EINTR,
+	ravudetgetcwdError_EISDIR,
+};
+enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd);
