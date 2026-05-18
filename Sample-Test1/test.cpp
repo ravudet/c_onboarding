@@ -7,8 +7,7 @@
 #include <unistd.h>
 #endif
 
-
-
+#include "directories.h"
 
 
 
@@ -16,9 +15,20 @@
 
 TEST(WriteToFile, WriteToFile)
 {
-	char* workingDirectory = getcwd(NULL, 0);
+	int error;
+
+	char* workingDirectory;
+	error = generatecwd(&workingDirectory);
+	/*if (error != 0)
+	{
+		//// TODO
+	}
+
+
+
+	////char* workingDirectory = getcwd(NULL, 0);
 	EXPECT_TRUE(false) << workingDirectory << "workingDirectory";
-	free(workingDirectory);
+	free(workingDirectory);*/
 
 }
 
