@@ -206,9 +206,6 @@ enum mkdirectorytraversalError mkdirectorytraversal(const char directoryPath[], 
 
 enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd)
 {
-	//// https://www.man7.org/linux/man-pages/man3/getcwd.3.html
-	//// TODO you are here, mimicing `ravudetfopen`
-
 	enum ravudetgetcwdError returnValue = SUCCESS;
 
 	cwd = getcwd(NULL, 0);
@@ -218,15 +215,27 @@ enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd)
 		int error = errno;
 		switch (error)
 		{
-			//// TODO you are here
-			//// TODO evaluate which of these can actually happen in the context of this method
 		case EACCES:
+			returnValue = ravudetgetcwdError_EACCES;
+			break;
 		case EFAULT:
+			returnValue = ravudetgetcwdError_EFAULT;
+			break;
 		case EINVAL:
+			returnValue = ravudetgetcwdError_EINVAL;
+			break;
 		case ENAMETOOLONG:
+			returnValue = ravudetgetcwdError_ENAMETOOLONG;
+			break;
 		case ENOENT:
+			returnValue = ravudetgetcwdError_ENOENT;
+			break;
 		case ENOMEM:
+			returnValue = ravudetgetcwdError_ENOMEM;
+			break;
 		case ERANGE:
+			returnValue = ravudetgetcwdError_ERANGE;
+			break;
 		default:
 			returnValue = ravudetgetcwdError_BUG;
 			break;
@@ -237,4 +246,42 @@ enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd)
 
 	finally:
 	return returnValue;
+}
+
+enum generatecwdError generatecwd(char** cwd)
+{
+	enum generatecwdError returnValue = SUCCESS;
+	int error;
+
+	error = ravudetgetcwd(NULL, 0, cwd);
+	if (error != SUCCESS)
+	{
+		switch (error)
+		{
+		case ravudetgetcwdError_EACCES:
+			returnValue = generatecwdError_EACCES;
+			break;
+		case ravudetgetcwdError_ENAMETOOLONG:
+			returnValue = generatecwdError_ENAMETOOLONG;
+			break;
+		case ravudetgetcwdError_ENOENT:
+			returnValue = generatecwdError_ENOENT;
+			break;
+		case ravudetgetcwdError_ENOMEM:
+			returnValue = generatecwdError_ENOMEM;
+			break;
+		default:
+			returnValue = generatecwdError_BUG;
+			break;
+		}
+
+		goto catch;
+	}
+
+	finally:
+	return returnValue;
+
+	catch:
+	free(cwd);
+	goto finally;
 }

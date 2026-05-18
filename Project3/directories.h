@@ -52,7 +52,21 @@ enum ravudetgetcwdError
 {
 	ravudetgetcwdError_BUG = 1,
 	ravudetgetcwdError_EACCES,
-	ravudetgetcwdError_EINTR,
-	ravudetgetcwdError_EISDIR,
+	ravudetgetcwdError_EFAULT,
+	ravudetgetcwdError_EINVAL,
+	ravudetgetcwdError_ENAMETOOLONG,
+	ravudetgetcwdError_ENOENT,
+	ravudetgetcwdError_ENOMEM,
+	ravudetgetcwdError_ERANGE,
 };
 enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd);
+
+enum generatecwdError
+{
+	generatecwdError_BUG = 1,
+	generatecwdError_EACCES,
+	generatecwdError_ENAMETOOLONG,
+	generatecwdError_ENOENT,
+	generatecwdError_ENOMEM,
+};
+enum generatecwdError generatecwd(char** cwd);
