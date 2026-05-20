@@ -22,7 +22,7 @@ TEST(WriteToFile, WriteToFile)
 
 	char* workingDirectory;
 	error = generatecwd(&workingDirectory);
-	/*if (error != 0)
+	if (error != 0)
 	{
 		//// TODO
 	}
@@ -31,7 +31,7 @@ TEST(WriteToFile, WriteToFile)
 
 	////char* workingDirectory = getcwd(NULL, 0);
 	EXPECT_TRUE(false) << workingDirectory << "workingDirectory";
-	free(workingDirectory);*/
+	free(workingDirectory);
 
 }
 

@@ -208,7 +208,7 @@ enum ravudetgetcwdError ravudetgetcwd(char buf[], size_t size, char** cwd)
 {
 	enum ravudetgetcwdError returnValue = SUCCESS;
 
-	cwd = _getcwd(NULL, 0);
+	* cwd = _getcwd(NULL, 0);
 
 	if (*cwd == NULL)
 	{
