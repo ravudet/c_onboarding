@@ -20,7 +20,7 @@ TEST(WriteToFile, WriteToFile)
 	}
 
 
-	EXPECT_TRUE(false) << workingDirectory << "workingDirectory";
+	EXPECT_TRUE(false) << workingDirectory << "qwer";
 	free(workingDirectory);
 
 }
