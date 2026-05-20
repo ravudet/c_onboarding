@@ -7,7 +7,10 @@
 #include <unistd.h>
 #endif
 
-#include "directories.h"
+
+extern "C" {
+#include "..\Project3\directories.h"
+}
 
 
 
