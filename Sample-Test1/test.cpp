@@ -1,13 +1,5 @@
 #include "pch.h"
 
-#if defined _WIN32
-#include <direct.h>
-#define getcwd _getcwd
-#elif defined __linux__
-#include <unistd.h>
-#endif
-
-
 #include "..\Project3\errors.h"
 #include "..\Project3\directories.h"
 
@@ -28,8 +20,6 @@ TEST(WriteToFile, WriteToFile)
 	}
 
 
-
-	////char* workingDirectory = getcwd(NULL, 0);
 	EXPECT_TRUE(false) << workingDirectory << "workingDirectory";
 	free(workingDirectory);
 
