@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 
 enum ravudetfopenError
@@ -115,3 +119,7 @@ enum writeToFilePathError
 	writeToFilePathError_EMLINK,
 };
 enum writeToFilePathError writeToFilePath(const char path[], int pathLength, const char contents[]);
+
+#ifdef __cplusplus
+}
+#endif

@@ -10,7 +10,6 @@
 #endif
 
 #include <errno.h>
-#include <stdlib.h>
 
 #include "errors.h"
 #include "strs.h"

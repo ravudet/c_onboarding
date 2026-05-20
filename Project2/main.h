@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum mainError
 {
 	mainError_BUG = 1,
@@ -28,3 +32,7 @@ enum mainError
 	mainError_CLOSE_ENXIO,
 };
 enum mainError main();
+
+#ifdef __cplusplus
+}
+#endif

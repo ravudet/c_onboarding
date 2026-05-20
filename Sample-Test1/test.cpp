@@ -8,6 +8,7 @@
 #endif
 
 
+#include "..\Project3\errors.h"
 #include "..\Project3\directories.h"
 
 
@@ -21,7 +22,7 @@ TEST(WriteToFile, WriteToFile)
 
 	char* workingDirectory;
 	error = generatecwd(&workingDirectory);
-	if (error != 0)
+	if (error != SUCCESS)
 	{
 		//// TODO
 	}
