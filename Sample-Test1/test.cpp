@@ -8,9 +8,8 @@
 #endif
 
 
-extern "C" {
 #include "..\Project3\directories.h"
-}
+
 
 
 

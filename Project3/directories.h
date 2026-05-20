@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int getParentDirectory(const char path[], const int endIndex, const char directoryDelimiter[], const int delimiterLength);
 
 enum ravudetmkdirError
@@ -70,3 +74,7 @@ enum generatecwdError
 	generatecwdError_ENOMEM,
 };
 enum generatecwdError generatecwd(char** cwd);
+
+#ifdef __cplusplus
+}
+#endif
