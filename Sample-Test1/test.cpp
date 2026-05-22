@@ -1,6 +1,6 @@
 #include "pch.h"
 
-#include <std.io>
+//#include <std.io>
 #include <time.h>
 
 #include "..\Project3\arraylength.h"
@@ -10,7 +10,47 @@
 
 
 
+extern "C" {
+	int TimestampFormatLength(const char* format)
+	{
+		//// TODO null check
+		//// TODO assumes whatever it is that my locale is
 
+		int length = 0;
+		for (int i = 0; i < format[i] != '\0'; ++i)
+		{
+			if (format[i] == '%')
+			{
+				++i;
+				switch (format[i])
+				{
+				case 'Y':
+					length += 4;
+				case 'm':
+					length += 2;
+				case 'd':
+					length += 2;
+				case 'H':
+					length += 2;
+				case 'M':
+					length += 2;
+				case 'S':
+					length += 2;
+				default:
+					//// TODO unknown/not supported (these are actually different, you should go through all of the values [here](https://pubs.opengroup.org/onlinepubs/9699919799/functions/strftime.html) and figure out which ones you can't use because of locale; those should be "unsupported"; everything else is "feature gap" or "supported" or "unknown"
+				}
+
+				continue;
+			}
+			else
+			{
+				++length;
+			}
+		}
+
+		return length;
+	}
+}
 
 TEST(WriteToFile, WriteToFile)
 {
@@ -21,7 +61,8 @@ TEST(WriteToFile, WriteToFile)
 	EXPECT_EQ(SUCCESS, error);
 
 	char timestampFormat[] = "%Y-%m-%d %H:%M:%S"; //// TODO do milliseconds
-	char timestamp[ARRAY_LENGTH(timestampFormat)]; //// TODO this length computation doesn't actaully work
+	//char timestamp[ARRAY_LENGTH(timestampFormat)]; //// TODO this length computation doesn't actaully work
+	char timestamp[50];
 	time_t now = time(NULL);
 	struct tm* localTime = localtime(&now);
 
@@ -30,7 +71,7 @@ TEST(WriteToFile, WriteToFile)
 
 
 
-	EXPECT_TRUE(false) << workingDirectory << "qwer";
+	EXPECT_TRUE(false) << workingDirectory << "qwer" << timestamp;
 	free(workingDirectory);
 }
 
