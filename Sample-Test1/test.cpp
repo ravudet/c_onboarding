@@ -57,7 +57,7 @@ extern "C" {
 		return length + 1; // null terminator
 	}
 
-	char* combinePath(char* separator, )
+	char* combinePath(char* separator, ) //// TODO https://pubs.opengroup.org/onlinepubs/9699919799/functions/strcat.html
 }
 
 TEST(WriteToFile, WriteToFile)
