@@ -11,7 +11,7 @@
 
 
 extern "C" {
-	int TimestampFormatLength(const char* format)
+	int timestampFormatLength(const char* format)
 	{
 		//// TODO null check
 		//// TODO assumes whatever it is that my locale is
@@ -26,17 +26,23 @@ extern "C" {
 				{
 				case 'Y':
 					length += 4;
+					break;
 				case 'm':
 					length += 2;
+					break;
 				case 'd':
 					length += 2;
+					break;
 				case 'H':
 					length += 2;
+					break;
 				case 'M':
 					length += 2;
+					break;
 				case 'S':
 					length += 2;
-				default:
+					break;
+				////default:
 					//// TODO unknown/not supported (these are actually different, you should go through all of the values [here](https://pubs.opengroup.org/onlinepubs/9699919799/functions/strftime.html) and figure out which ones you can't use because of locale; those should be "unsupported"; everything else is "feature gap" or "supported" or "unknown"
 				}
 
@@ -48,8 +54,10 @@ extern "C" {
 			}
 		}
 
-		return length;
+		return length + 1; // null terminator
 	}
+
+	char* combinePath(char* separator, )
 }
 
 TEST(WriteToFile, WriteToFile)
@@ -60,19 +68,30 @@ TEST(WriteToFile, WriteToFile)
 	error = generatecwd(&workingDirectory);
 	EXPECT_EQ(SUCCESS, error);
 
-	char timestampFormat[] = "%Y-%m-%d %H:%M:%S"; //// TODO do milliseconds
-	//char timestamp[ARRAY_LENGTH(timestampFormat)]; //// TODO this length computation doesn't actaully work
-	char timestamp[50];
+	char timestampFormat[] = "%Y-%m-%d %H:%M:%S";
+	int timestampLength = timestampFormatLength(timestampFormat);
+	char* timestamp = (char*)malloc(timestampLength);
+
 	time_t now = time(NULL);
 	struct tm* localTime = localtime(&now);
 
-	strftime(timestamp, ARRAY_LENGTH(timestamp), timestampFormat, localTime);
+	strftime(timestamp, timestampLength, timestampFormat, localTime);
 
 
 
 
-	EXPECT_TRUE(false) << workingDirectory << "qwer" << timestamp;
+
+
+
+
+
+	EXPECT_TRUE(false) << workingDirectory << "qwer" << timestampLength << timestamp;
+
+
+
+	free(timestamp);
 	free(workingDirectory);
+
 }
 
 
