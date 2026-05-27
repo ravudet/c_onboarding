@@ -73,6 +73,8 @@ extern "C" {
 		const int path2Length,
 		char** combinedPath) //// TODO `const`?
 	{
+		//// TODO what about leading or trailing separators?
+
 		enum combinePathError returnValue = (combinePathError)SUCCESS; //// TODO why do you have to cast here, but not in other files?
 
 		*combinedPath = (char*)malloc(path1Length + separatorLength + path2Length - 1); // -2 because of 3 null terminators
@@ -96,6 +98,12 @@ extern "C" {
 		free((void*)*combinedPath);
 		goto finally;
 	}
+
+	struct string
+	{
+		char* value;
+		int length;
+	};
 }
 
 TEST(WriteToFile, WriteToFile)
