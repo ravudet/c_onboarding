@@ -57,6 +57,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <!--<AdditionalIncludeDirectories>..\Project3</AdditionalIncludeDirectories>-->
     </ClCompile>
     <Link>

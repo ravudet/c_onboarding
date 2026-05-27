@@ -1,6 +1,7 @@
 #include "pch.h"
 
 //#include <std.io>
+#include <string.h>
 #include <time.h>
 
 #include "..\Project3\arraylength.h"
@@ -58,15 +59,42 @@ extern "C" {
 	}
 
 	//// TODO https://pubs.opengroup.org/onlinepubs/9699919799/functions/strcat.html
-	char* combinePath(
+	enum combinePathError
+	{
+		combinePathError_BUG = 1,
+		combinePathError_ENOMEM,
+	};
+	enum combinePathError combinePath(
 		const char* separator, 
 		const int separatorLength, 
 		const char* path1,
 		const int path1Length, 
 		const char* path2,
-		const int path2Length)
+		const int path2Length,
+		char** combinedPath) //// TODO `const`?
 	{
-		return 0;
+		enum combinePathError returnValue = (combinePathError)SUCCESS; //// TODO why do you have to cast here, but not in other files?
+
+		*combinedPath = (char*)malloc(path1Length + separatorLength + path2Length - 1); // -2 because of 3 null terminators
+		if (*combinedPath == NULL)
+		{
+			//// TODO check `errno` actually
+			returnValue = combinePathError_ENOMEM;
+			goto catch2;
+		}
+
+		memcpy((void*)*combinedPath, path1, path1Length);
+		void* endOfFirst = ((char*)*combinedPath) + path1Length - 1;
+		memcpy(endOfFirst, separator, separatorLength);
+		void* endOfSeparator = (char*)endOfFirst + separatorLength - 1;
+		memcpy(endOfSeparator, path2, path2Length);
+
+		finally:
+		return returnValue;
+
+		catch2: //// TODO "catch"
+		free((void*)*combinedPath);
+		goto finally;
 	}
 }
 
@@ -95,11 +123,14 @@ TEST(WriteToFile, WriteToFile)
 
 
 
+	char separator[] = "\\";
+	char* combinedPath;
+	//// TODO do better then `strlen`
+	combinePath(separator, ARRAY_LENGTH(separator), workingDirectory, strlen(workingDirectory) + 1, timestamp, timestampLength, &combinedPath);
 
 
 
-
-
+	ASSERT_TRUE(false) << combinedPath;
 	ASSERT_TRUE(false) << workingDirectory << "qwer" << timestampLength << timestamp;
 
 
