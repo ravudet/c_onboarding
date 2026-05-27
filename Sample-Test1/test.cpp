@@ -74,6 +74,7 @@ extern "C" {
 		char** combinedPath) //// TODO `const`?
 	{
 		//// TODO what about leading or trailing separators?
+		//// TODO you should have a string combining method, and then `combinePath` should leverage that
 
 		enum combinePathError returnValue = (combinePathError)SUCCESS; //// TODO why do you have to cast here, but not in other files?
 
