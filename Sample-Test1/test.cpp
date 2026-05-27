@@ -57,11 +57,22 @@ extern "C" {
 		return length + 1; // null terminator
 	}
 
-	char* combinePath(char* separator, ) //// TODO https://pubs.opengroup.org/onlinepubs/9699919799/functions/strcat.html
+	//// TODO https://pubs.opengroup.org/onlinepubs/9699919799/functions/strcat.html
+	char* combinePath(
+		const char* separator, 
+		const int separatorLength, 
+		const char* path1,
+		const int path1Length, 
+		const char* path2,
+		const int path2Length)
+	{
+		return 0;
+	}
 }
 
 TEST(WriteToFile, WriteToFile)
 {
+	//// TODO use `ASSERT_*` instead of `EXPECT_*`
 	int error;
 
 	char* workingDirectory;
@@ -71,6 +82,11 @@ TEST(WriteToFile, WriteToFile)
 	char timestampFormat[] = "%Y-%m-%d %H:%M:%S";
 	int timestampLength = timestampFormatLength(timestampFormat);
 	char* timestamp = (char*)malloc(timestampLength);
+	if (timestamp == NULL)
+	{
+		//// TODO
+		return;
+	}
 
 	time_t now = time(NULL);
 	struct tm* localTime = localtime(&now);
@@ -84,8 +100,7 @@ TEST(WriteToFile, WriteToFile)
 
 
 
-
-	EXPECT_TRUE(false) << workingDirectory << "qwer" << timestampLength << timestamp;
+	ASSERT_TRUE(false) << workingDirectory << "qwer" << timestampLength << timestamp;
 
 
 
