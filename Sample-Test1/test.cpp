@@ -96,11 +96,11 @@ extern "C" {
 		return returnValue;
 
 		catch2: //// TODO "catch"
-		free((void*)*combinedPath);
+		free(*combinedPath);
 		goto finally;
 	}
 
-	struct string //// TODO macro to create instance from char array
+	struct string
 	{
 		const char* value;
 		const int length; // this *does not* include the null terminator
@@ -111,18 +111,33 @@ extern "C" {
 		return { string, length };
 	}
 
-	static inline string createStringSlow(const char string[])
+	enum concatStringError
 	{
-		int length = strlen(string);
-		return { string, length };
-	}
+		concatStringError_BUG = 1,
+		concatStringError_ENOMEM,
+	};
+	concatStringError concatString(const string first, const string second, string* concated)
+	{
+		enum concatStringError returnValue = (concatStringError)SUCCESS; //// TODO shouldn't have to cast
 
-	string combineString(const string first, const string second)
-	{
-		return { "asdf", 4 };
+		char* array = (char*)malloc(first.length + second.length + 1); // +1 because we need a null terminator
+		if (array == NULL)
+		{
+			//// TODO check `errno` actually
+			returnValue = concatStringError_ENOMEM;
+			goto catch2;
+		}
+
+		finally:
+		return returnValue;
+
+		catch2: //// TODO catch
+		free(array);
+		goto finally;
 	}
 
 #define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
+#define CREATE_STRING_SLOW(x) (createString(x, strlen(x) - 1))
 }
 
 TEST(WriteToFile, WriteToFile)
