@@ -106,19 +106,20 @@ extern "C" {
 		const int length; // this *does not* include the null terminator
 	};
 
-	static inline string createString(char string[], int length)
+	static inline string createString(const char string[], const int length)
 	{
+		return { string, length };
+	}
+
+	static inline string createStringSlow(const char string[])
+	{
+		int length = strlen(string);
 		return { string, length };
 	}
 
 	string combineString(const string first, const string second)
 	{
 		return { "asdf", 4 };
-	}
-
-	static inline void Foo(char value[])
-	{
-		ARRAY_LENGTH(value);
 	}
 
 #define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
