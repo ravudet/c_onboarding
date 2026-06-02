@@ -116,17 +116,22 @@ extern "C" {
 		concatStringError_BUG = 1,
 		concatStringError_ENOMEM,
 	};
-	concatStringError concatString(const string first, const string second, string* concated)
+	concatStringError concatString(const string first, const string second, string* concated) //// TODO variable parameter list
 	{
 		enum concatStringError returnValue = (concatStringError)SUCCESS; //// TODO shouldn't have to cast
 
-		char* array = (char*)malloc(first.length + second.length + 1); // +1 because we need a null terminator
+		int arrayLength = first.length + second.length + 1; // +1 because we need a null terminator
+		char* array = (char*)malloc(arrayLength);
 		if (array == NULL)
 		{
 			//// TODO check `errno` actually
 			returnValue = concatStringError_ENOMEM;
 			goto catch2;
 		}
+
+		memcpy(array, first.value, first.length);
+		memcpy(array, second.value, second.length);
+		array[arrayLength - 1] = '\0';
 
 		finally:
 		return returnValue;
