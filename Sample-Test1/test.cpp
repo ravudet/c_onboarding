@@ -100,15 +100,40 @@ extern "C" {
 		goto finally;
 	}
 
-	struct string
+	struct string //// TODO macro to create instance from char array
 	{
-		char* value;
-		int length;
+		const char* value;
+		const int length; // this *does not* include the null terminator
 	};
+
+	static inline string createString(char string[], int length)
+	{
+		return { string, length };
+	}
+
+	string combineString(const string first, const string second)
+	{
+		return { "asdf", 4 };
+	}
+
+	static inline void Foo(char value[])
+	{
+		ARRAY_LENGTH(value);
+	}
+
+#define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
 }
 
 TEST(WriteToFile, WriteToFile)
 {
+	char something[] = "asdfas";
+	//string str = createString(something);
+
+	string str = CREATE_STRING(something);
+
+	/*int somethingelse[] = {1, 2, 3};
+	string str2 = CREATE_STRING(somethingelse);*/
+
 	//// TODO use `ASSERT_*` instead of `EXPECT_*`
 	int error;
 
