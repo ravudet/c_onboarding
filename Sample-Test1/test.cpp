@@ -130,7 +130,7 @@ extern "C" {
 		}
 
 		memcpy(array, first.value, first.length);
-		memcpy(array, second.value, second.length);
+		memcpy(array, second.value, second.length); //// TODO actually, this will overwrite first
 		array[arrayLength - 1] = '\0';
 
 		//// TODO finish this
@@ -163,8 +163,28 @@ extern "C" {
 		return { second.value, second.length + (*first).totalLength, first };
 	}
 
-	void concatedStringToString(const concatedString concatedString, string* string)
+	string concatedStringToString(const concatedString string)
 	{
+		int arrayLength = string.totalLength + 1;
+		char* array = (char*)malloc(arrayLength);
+		if (array == NULL)
+		{
+			//// TODO
+			return {};
+		}
+
+		array[arrayLength - 1] = '\0';
+
+		concatedString current = string;
+		while (current.antecedent != NULL)
+		{
+			int stringLength = current.totalLength - current.antecedent->totalLength;
+			memcpy(array, current.value, stringLength);
+			concatedString something = *current.antecedent;
+			current = something;
+		}
+
+
 
 	}
 

@@ -38,3 +38,56 @@ bool substrcmp(const char x[], const int xStart, const char y[], const int yStar
 {
 	return memcmp(x + xStart, y + yStart, length) == 0;
 }
+
+
+
+
+
+
+typedef const struct string
+{
+	const char* value;
+	const int length; // this *does not* include the null terminator
+} string;
+
+typedef struct concatedString
+{
+	const char* value;
+	const int totalLength;
+	const concatedString* antecedent;
+} concatedString;
+
+concatedString concatString2(const string first)
+{
+	//// TODO you are here
+	//// TODO you've lost the plot a bit, you're trying to combine paths; maybe get the scaffolding of that working so that you can actually write your test, and *then* proceed to optimizing stuff around string allocations
+
+	return { first.value, first.length, NULL };
+}
+
+concatedString concatString3(const concatedString* first, const string second)
+{
+	return { second.value, second.length + (*first).totalLength, first };
+}
+
+string concatedStringToString(const concatedString string)
+{
+	int arrayLength = string.totalLength + 1;
+	char* array = (char*)malloc(arrayLength);
+	if (array == NULL)
+	{
+		//// TODO
+		return {};
+	}
+
+	array[arrayLength - 1] = '\0';
+
+	concatedString* current = &string;
+	for (current = &string; current->antecedent != NULL; current = current->antecedent)
+	{
+		int stringLength = current->totalLength - current->antecedent->totalLength;
+		memcpy(array, current->value, stringLength); //// TODO `memcpy` always write at the beginning of the destination
+	}
+
+	memcpy(array, current->value, current->totalLength);
+}
