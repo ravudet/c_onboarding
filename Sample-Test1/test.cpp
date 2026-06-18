@@ -150,16 +150,22 @@ extern "C" {
 		const concatedString* antecedent;
 	};
 
-	void concatString2(const string first, const string second, concatedString* concated)
+	concatedString concatString2(const string first)
 	{
 		//// TODO you are here
 		//// TODO you've lost the plot a bit, you're trying to combine paths; maybe get the scaffolding of that working so that you can actually write your test, and *then* proceed to optimizing stuff around string allocations
-	
+
+		return { first.value, first.length, NULL };
 	}
 
 	concatedString concatString3(const concatedString* first, const string second)
 	{
 		return { second.value, second.length + (*first).totalLength, first };
+	}
+
+	void concatedStringToString(const concatedString concatedString, string* string)
+	{
+
 	}
 
 #define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
