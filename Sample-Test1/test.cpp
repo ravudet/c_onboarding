@@ -100,7 +100,7 @@ extern "C" {
 		goto finally;
 	}
 
-	struct string
+	const struct string
 	{
 		const char* value;
 		const int length; // this *does not* include the null terminator
@@ -139,6 +139,18 @@ extern "C" {
 		catch2: //// TODO catch
 		free(array);
 		goto finally;
+	}
+
+	const struct concatedString
+	{
+		const string string;
+		const concatedString* antecedent;
+	};
+
+	void concatString2(const string first, const string second, string* concated)
+	{
+		//// TODO you are here
+		//// TODO you've lost the plot a bit, you're trying to combine paths; maybe get the scaffolding of that working so that you can actually write your test, and *then* proceed to optimizing stuff around string allocations
 	}
 
 #define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
