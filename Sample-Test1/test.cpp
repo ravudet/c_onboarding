@@ -133,6 +133,8 @@ extern "C" {
 		memcpy(array, second.value, second.length);
 		array[arrayLength - 1] = '\0';
 
+		//// TODO finish this
+
 		finally:
 		return returnValue;
 
@@ -143,14 +145,21 @@ extern "C" {
 
 	const struct concatedString
 	{
-		const string string;
+		const char* value;
+		const int totalLength;
 		const concatedString* antecedent;
 	};
 
-	void concatString2(const string first, const string second, string* concated)
+	void concatString2(const string first, const string second, concatedString* concated)
 	{
 		//// TODO you are here
 		//// TODO you've lost the plot a bit, you're trying to combine paths; maybe get the scaffolding of that working so that you can actually write your test, and *then* proceed to optimizing stuff around string allocations
+	
+	}
+
+	concatedString concatString3(const concatedString* first, const string second)
+	{
+		return { second.value, second.length + (*first).totalLength, first };
 	}
 
 #define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
