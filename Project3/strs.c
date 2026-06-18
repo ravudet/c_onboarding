@@ -77,7 +77,6 @@ string concatedStringToString(const concatedString string)
 	if (array == NULL)
 	{
 		//// TODO
-		return {};
 	}
 
 	array[arrayLength - 1] = '\0';
@@ -90,4 +89,6 @@ string concatedStringToString(const concatedString string)
 	}
 
 	memcpy(array, current->value, current->totalLength);
+
+	struct string foo = { array, arrayLength - 1 };
 }
