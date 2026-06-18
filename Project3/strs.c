@@ -91,4 +91,5 @@ string concatedStringToString(const concatedString string)
 	memcpy(array, current->value, current->totalLength);
 
 	struct string foo = { array, arrayLength - 1 };
+	return foo; //// TODO i think you're proving that you're pointer "out" parameter pattern doesn't actually work because you will need to malloc, or they will need to initialize
 }
