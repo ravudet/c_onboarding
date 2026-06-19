@@ -50,7 +50,7 @@ typedef const struct string
 	const int length; // this *does not* include the null terminator
 } string;
 
-typedef struct concatedString
+const typedef struct concatedString
 {
 	const char* value;
 	const int totalLength;
@@ -62,13 +62,43 @@ concatedString concatString2(const string first)
 	//// TODO you are here
 	//// TODO you've lost the plot a bit, you're trying to combine paths; maybe get the scaffolding of that working so that you can actually write your test, and *then* proceed to optimizing stuff around string allocations
 
-	return { first.value, first.length, NULL };
+	struct concatedString foo = { first.value, first.length, NULL };
+	return foo;
 }
 
 concatedString concatString3(const concatedString* first, const string second)
 {
-	return { second.value, second.length + (*first).totalLength, first };
+	struct concatedString foo = { second.value, second.length + (*first).totalLength, first };
+	return foo;
 }
+
+
+
+
+const typedef struct concatedString2
+{
+	const concatedString* first;
+	const concatedString* second;
+} concatedString2;
+
+concatedString concatString4(const concatedString* first, const concatedString* second)
+{
+}
+
+
+
+
+const typedef union concatedStringUnion
+{
+	concatedString concatedString;
+	concatedString2 concatedString2;
+} concatedStringUnion;
+const typedef struct concatedStringCombined
+{
+	int type;
+	concatedStringUnion string;
+} concatedStringCombined;
+
 
 string concatedStringToString(const concatedString string)
 {
@@ -92,4 +122,17 @@ string concatedStringToString(const concatedString string)
 
 	struct string foo = { array, arrayLength - 1 };
 	return foo; //// TODO i think you're proving that you're pointer "out" parameter pattern doesn't actually work because you will need to malloc, or they will need to initialize
+}
+
+
+
+
+
+string concatedStringUnionToString(const concatedStringCombined string)
+{
+	switch (string.type)
+	{
+	case 0:
+		return concatedStringToString(string.string.concatedString);
+	}
 }
