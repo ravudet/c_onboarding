@@ -133,6 +133,11 @@ extern "C" {
 		memcpy(array, second.value, second.length); //// TODO actually, this will overwrite first
 		array[arrayLength - 1] = '\0';
 
+		concated->value = array;
+		concated->length = arrayLength;
+
+
+
 		//// TODO finish this
 
 		finally:
