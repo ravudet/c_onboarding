@@ -44,6 +44,7 @@ bool substrcmp(const char x[], const int xStart, const char y[], const int yStar
 
 
 
+
 typedef const struct string
 {
 	const char* value;

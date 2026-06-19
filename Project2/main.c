@@ -4,6 +4,7 @@
 //// TODO did you put `const` everywhere it's applicable?
 //// TODO do you have binary and build files in the repo?
 //// TODO go through TODOs
+//// TODO you are done with your onboarding; now you can play around with the string stuff in `strs.c`
 
 enum mainError main()
 {

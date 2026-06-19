@@ -143,51 +143,6 @@ extern "C" {
 		goto finally;
 	}
 
-	const struct concatedString
-	{
-		const char* value;
-		const int totalLength;
-		const concatedString* antecedent;
-	};
-
-	concatedString concatString2(const string first)
-	{
-		//// TODO you are here
-		//// TODO you've lost the plot a bit, you're trying to combine paths; maybe get the scaffolding of that working so that you can actually write your test, and *then* proceed to optimizing stuff around string allocations
-
-		return { first.value, first.length, NULL };
-	}
-
-	concatedString concatString3(const concatedString* first, const string second)
-	{
-		return { second.value, second.length + (*first).totalLength, first };
-	}
-
-	string concatedStringToString(const concatedString string)
-	{
-		int arrayLength = string.totalLength + 1;
-		char* array = (char*)malloc(arrayLength);
-		if (array == NULL)
-		{
-			//// TODO
-			return {};
-		}
-
-		array[arrayLength - 1] = '\0';
-
-		concatedString current = string;
-		while (current.antecedent != NULL)
-		{
-			int stringLength = current.totalLength - current.antecedent->totalLength;
-			memcpy(array, current.value, stringLength);
-			concatedString something = *current.antecedent;
-			current = something;
-		}
-
-
-
-	}
-
 #define CREATE_STRING(x) (createString(x, ARRAY_LENGTH(x) - 1))
 #define CREATE_STRING_SLOW(x) (createString(x, strlen(x) - 1))
 }
