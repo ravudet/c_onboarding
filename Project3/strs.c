@@ -45,7 +45,7 @@ bool substrcmp(const char x[], const int xStart, const char y[], const int yStar
 
 
 
-typedef const struct string
+/*typedef const struct string
 {
 	const char* value;
 	const int length; // this *does not* include the null terminator
@@ -136,4 +136,4 @@ string concatedStringUnionToString(const concatedStringCombined string)
 	case 0:
 		return concatedStringToString(string.string.concatedString);
 	}
-}
+}*/
