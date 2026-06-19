@@ -111,6 +111,15 @@ extern "C" {
 		return { string, length };
 	}
 
+
+
+#define DEEP_COPY(from, toPtr) \
+	void* toVoidPtr = (void*)toPtr; \
+	void* fromVoidPtr = &from; \
+	memcpy(toVoidPtr, fromVoidPtr, sizeof(from));
+
+
+
 	enum concatStringError
 	{
 		concatStringError_BUG = 1,
@@ -133,9 +142,12 @@ extern "C" {
 		memcpy(array, second.value, second.length); //// TODO actually, this will overwrite first
 		array[arrayLength - 1] = '\0';
 
-		concated->value = array;
-		concated->length = arrayLength;
+		//concated->value = array;
+		//concated->length = arrayLength;
 
+
+		string foo = {array, arrayLength};
+		DEEP_COPY(foo, concated);
 
 		//// TODO use `_In_`, `_Out_`, and `_Inout_` for your parameters
 
