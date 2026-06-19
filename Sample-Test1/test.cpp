@@ -137,6 +137,8 @@ extern "C" {
 		concated->length = arrayLength;
 
 
+		//// TODO use `_In_`, `_Out_`, and `_Inout_` for your parameters
+
 
 		//// TODO finish this
 
